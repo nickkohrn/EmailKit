@@ -15,7 +15,8 @@ struct ContentView: View {
                             TextField(
                                 "Write something...",
                                 text: viewStore.binding(\.$input),
-                                prompt: Text("Write something..."),
+                                prompt: Text("Write something...")
+                                    .font(.title),
                                 axis: .vertical
                             )
                             .padding()
