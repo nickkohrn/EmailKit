@@ -70,6 +70,7 @@ struct ContentView: View {
                                 removal: .movingParts.move(edge: .top)
                             )
                         )
+                        .zIndex(1)
                     }
                 }
                 .font(.title)
