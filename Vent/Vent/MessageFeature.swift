@@ -2,13 +2,18 @@ import ComposableArchitecture
 import Foundation
 
 struct MessageFeature: ReducerProtocol {
-    enum Transition: String, Equatable, CaseIterable, Identifiable {
+    enum Transition: Int, Equatable, CaseIterable, Identifiable {
         case move
         case vanish
 
-        var id: String { rawValue }
+        var id: Int { rawValue }
 
-        var title: String { rawValue.localizedCapitalized }
+        var title: String {
+            switch self {
+            case .move: return "move"
+            case .vanish: return "vanish"
+            }
+        }
 
         var systemSymbolName: String {
             switch self {
@@ -32,11 +37,13 @@ struct MessageFeature: ReducerProtocol {
     enum Action: Equatable, BindableAction {
         case binding(BindingAction<State>)
         case endAnimation
+        case onAppear
         case sendInput
         case startAnimation
     }
 
     @Dependency(\.continuousClock) var clock
+    @Dependency(\.userDefaults) var userDefaults
     
     var body: some ReducerProtocol<State, Action> {
         BindingReducer()
@@ -44,11 +51,25 @@ struct MessageFeature: ReducerProtocol {
         Reduce<State, Action> { state, action in
             switch action {
 
+            case .binding(\.$transition):
+                return .fireAndForget { [transition = state.transition] in
+                    await userDefaults.setMessageAnimation(transition.id)
+                }
+
             case .binding:
                 return .none
 
             case .endAnimation:
                 state.isAnimatingInput = false
+                return .none
+
+            case .onAppear:
+                let transitionID = userDefaults.messageSendAnimation
+                guard let transition = Transition(rawValue: transitionID) else {
+                    assertionFailure("Expected \(Transition.self)")
+                    return .none
+                }
+                state.transition = transition
                 return .none
 
             case .sendInput:
