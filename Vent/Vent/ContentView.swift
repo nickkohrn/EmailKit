@@ -65,7 +65,7 @@ struct ContentView: View {
                     )
                     .overlay(
                         RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color.secondary, lineWidth: 1)
+                            .stroke(Color.secondary, lineWidth: 0.5)
                     )
                     Button {
                         viewStore.send(.sendInput)
@@ -138,7 +138,7 @@ struct ContentView: View {
                     )
                     .overlay(
                         RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color.secondary, lineWidth: 1)
+                            .stroke(Color.secondary, lineWidth: 0.5)
                     )
                     Button {
                         viewStore.send(.sendInput)
