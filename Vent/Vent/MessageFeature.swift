@@ -2,35 +2,8 @@ import ComposableArchitecture
 import Foundation
 
 struct MessageFeature: ReducerProtocol {
-    enum Transition: String, Equatable, CaseIterable, Identifiable {
-        case move
-        case opacity
-        case vanish
-
-        var id: String { rawValue }
-
-        var title: String {
-            let value: String
-            switch self {
-            case .move: value = "move"
-            case .opacity: value = "opacity"
-            case .vanish: value = "vanish"
-            }
-            return value.localizedCapitalized
-        }
-
-        var systemSymbolName: String {
-            switch self {
-            case .move: return "arrow.up.circle.fill"
-            case .opacity: return "line.3.horizontal.decrease"
-            case .vanish: return "circle.dotted"
-            }
-        }
-    }
-    
     struct State: Equatable {
         @BindingState var input = ""
-        @BindingState var transition: Transition = .move
         var inputToAnimate = ""
         var isAnimatingInput = false
         
@@ -56,11 +29,6 @@ struct MessageFeature: ReducerProtocol {
         Reduce<State, Action> { state, action in
             switch action {
 
-            case .binding(\.$transition):
-                return .fireAndForget { [transition = state.transition] in
-                    await userDefaults.setMessageAnimation(transition.id)
-                }
-
             case .binding:
                 return .none
 
@@ -69,9 +37,6 @@ struct MessageFeature: ReducerProtocol {
                 return .none
 
             case .onAppear:
-                let transitionID = userDefaults.messageSendAnimation
-                let transition = Transition(rawValue: transitionID) ?? .move
-                state.transition = transition
                 return .none
 
             case .sendInput:
