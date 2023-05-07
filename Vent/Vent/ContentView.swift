@@ -15,8 +15,7 @@ struct ContentView: View {
                             TextField(
                                 "Write something...",
                                 text: viewStore.binding(\.$input),
-                                prompt: Text("Write something...")
-                                    .font(.title),
+                                prompt: Text("Write something..."),
                                 axis: .vertical
                             )
                             .padding()
@@ -75,7 +74,6 @@ struct ContentView: View {
                         .zIndex(1)
                     }
                 }
-                .font(.title)
                 .padding()
                 .edgesIgnoringSafeArea(.top)
                 .navigationTitle("Let It Go")
