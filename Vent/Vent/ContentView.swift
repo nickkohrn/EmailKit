@@ -76,6 +76,8 @@ struct ContentView: View {
                 .font(.title)
                 .padding()
                 .edgesIgnoringSafeArea(.top)
+                .navigationTitle("Let It Go")
+                .toolbarBackground(.visible, for: .navigationBar)
             }
         }
     }
