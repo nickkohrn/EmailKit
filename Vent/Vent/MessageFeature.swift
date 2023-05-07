@@ -9,10 +9,12 @@ struct MessageFeature: ReducerProtocol {
         var id: Int { rawValue }
 
         var title: String {
+            let value: String
             switch self {
-            case .move: return "move"
-            case .vanish: return "vanish"
+            case .move: value = "move"
+            case .vanish: value = "vanish"
             }
+            return value.localizedCapitalized
         }
 
         var systemSymbolName: String {
