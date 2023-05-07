@@ -4,7 +4,8 @@ import Foundation
 struct MessageFeature: ReducerProtocol {
     struct State: Equatable {
         @BindingState var input = ""
-        var isSendingInput = false
+        var inputToAnimate = ""
+        var isAnimatingInput = false
         
         var isSendButtonDisabled: Bool {
             input.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
@@ -13,19 +14,41 @@ struct MessageFeature: ReducerProtocol {
     
     enum Action: Equatable, BindableAction {
         case binding(BindingAction<State>)
+        case endAnimation
         case sendInput
+        case startAnimation
     }
+
+    @Dependency(\.continuousClock) var clock
     
-    func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
-        switch action {
-            
-        case .binding:
-            return .none
-            
-        case .sendInput:
-            state.isSendingInput = true
-            return .none
-            
+    var body: some ReducerProtocol<State, Action> {
+        BindingReducer()
+
+        Reduce<State, Action> { state, action in
+            switch action {
+
+            case .binding:
+                return .none
+
+            case .endAnimation:
+                state.isAnimatingInput = false
+                return .none
+
+            case .sendInput:
+                return .run { send in
+                    await send(.startAnimation, animation: .default)
+                }
+
+            case .startAnimation:
+                state.isAnimatingInput = true
+                state.inputToAnimate = state.input
+                state.input = ""
+                return .run { send in
+                    try await clock.sleep(for: .seconds(0.5))
+                    await send(.endAnimation, animation: .default)
+                }
+
+            }
         }
     }
 }

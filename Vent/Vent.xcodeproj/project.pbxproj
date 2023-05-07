@@ -16,6 +16,7 @@
 		F97987E62A070F55001D2C6C /* VentUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97987E52A070F55001D2C6C /* VentUITestsLaunchTests.swift */; };
 		F97987F42A072AB9001D2C6C /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = F97987F32A072AB9001D2C6C /* ComposableArchitecture */; };
 		F97987F62A072AEC001D2C6C /* MessageFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97987F52A072AEC001D2C6C /* MessageFeature.swift */; };
+		F9A9D7872A073349009E5108 /* Pow in Frameworks */ = {isa = PBXBuildFile; productRef = F9A9D7862A073349009E5108 /* Pow */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F97987F42A072AB9001D2C6C /* ComposableArchitecture in Frameworks */,
+				F9A9D7872A073349009E5108 /* Pow in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -150,6 +152,7 @@
 			name = Vent;
 			packageProductDependencies = (
 				F97987F32A072AB9001D2C6C /* ComposableArchitecture */,
+				F9A9D7862A073349009E5108 /* Pow */,
 			);
 			productName = Vent;
 			productReference = F97987C52A070F53001D2C6C /* Vent.app */;
@@ -225,6 +228,7 @@
 			mainGroup = F97987BC2A070F53001D2C6C;
 			packageReferences = (
 				F97987F22A072AB9001D2C6C /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+				F9A9D7852A073349009E5108 /* XCRemoteSwiftPackageReference "Pow" */,
 			);
 			productRefGroup = F97987C62A070F53001D2C6C /* Products */;
 			projectDirPath = "";
@@ -605,6 +609,14 @@
 				minimumVersion = 0.9.0;
 			};
 		};
+		F9A9D7852A073349009E5108 /* XCRemoteSwiftPackageReference "Pow" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/movingparts-io/Pow";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -612,6 +624,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F97987F22A072AB9001D2C6C /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = ComposableArchitecture;
+		};
+		F9A9D7862A073349009E5108 /* Pow */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F9A9D7852A073349009E5108 /* XCRemoteSwiftPackageReference "Pow" */;
+			productName = Pow;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
