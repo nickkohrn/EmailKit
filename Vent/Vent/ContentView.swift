@@ -1,35 +1,49 @@
+import ComposableArchitecture
 import SwiftUI
 
 struct ContentView: View {
-    @State private var text = ""
-    private var isSendButtonDisabled: Bool { text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
+    let store: StoreOf<MessageFeature>
     
     var body: some View {
-        VStack {
-            Spacer()
-            HStack {
-                TextField(
-                    "Write something...",
-                    text: $text,
-                    prompt: Text("Write something..."),
-                    axis: .vertical
-                )
-                Button {
-                    
-                } label: {
-                    Image(systemName: "arrow.up.circle.fill")
-                        .imageScale(.large)
-                        .fontWeight(.semibold)
+        WithViewStore(store, observe: { $0 }) { viewStore in
+            VStack {
+                Spacer()
+                HStack {
+                    TextField(
+                        "Write something...",
+                        text: viewStore.binding(\.$input),
+                        prompt: Text("Write something..."),
+                        axis: .vertical
+                    )
+                    Button {
+                        viewStore.send(.sendInput)
+                    } label: {
+                        Image(systemName: "arrow.up.circle.fill")
+                            .imageScale(.large)
+                            .fontWeight(.semibold)
+                    }
+                    .disabled(viewStore.isSendButtonDisabled)
                 }
-                .disabled(isSendButtonDisabled)
             }
+            .padding()
         }
-        .padding()
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        Group {
+            ContentView(store: .init(
+                initialState: .init(),
+                reducer: MessageFeature()
+            ))
+            .previewDisplayName("Empty")
+            
+            ContentView(store: .init(
+                initialState: .init(input: "This is a message."),
+                reducer: MessageFeature()
+            ))
+            .previewDisplayName("Populated")
+        }
     }
 }

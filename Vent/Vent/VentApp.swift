@@ -1,17 +1,14 @@
-//
-//  VentApp.swift
-//  Vent
-//
-//  Created by Nick Kohrn on 5/6/23.
-//
-
+import ComposableArchitecture
 import SwiftUI
 
 @main
 struct VentApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(store: .init(
+                initialState: .init(),
+                reducer: MessageFeature()
+            ))
         }
     }
 }
