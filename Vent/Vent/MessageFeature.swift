@@ -2,16 +2,18 @@ import ComposableArchitecture
 import Foundation
 
 struct MessageFeature: ReducerProtocol {
-    enum Transition: Int, Equatable, CaseIterable, Identifiable {
+    enum Transition: String, Equatable, CaseIterable, Identifiable {
         case move
+        case opacity
         case vanish
 
-        var id: Int { rawValue }
+        var id: String { rawValue }
 
         var title: String {
             let value: String
             switch self {
             case .move: value = "move"
+            case .opacity: value = "opacity"
             case .vanish: value = "vanish"
             }
             return value.localizedCapitalized
@@ -20,6 +22,7 @@ struct MessageFeature: ReducerProtocol {
         var systemSymbolName: String {
             switch self {
             case .move: return "arrow.up.circle.fill"
+            case .opacity: return "line.3.horizontal.decrease"
             case .vanish: return "circle.dotted"
             }
         }
@@ -67,10 +70,7 @@ struct MessageFeature: ReducerProtocol {
 
             case .onAppear:
                 let transitionID = userDefaults.messageSendAnimation
-                guard let transition = Transition(rawValue: transitionID) else {
-                    assertionFailure("Expected \(Transition.self)")
-                    return .none
-                }
+                let transition = Transition(rawValue: transitionID) ?? .move
                 state.transition = transition
                 return .none
 

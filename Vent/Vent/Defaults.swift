@@ -20,12 +20,12 @@ public struct UserDefaultsClient {
     public var setString: @Sendable (_ string: String, _ key: String) async -> Void
     public var stringForKey: @Sendable (String) -> String?
 
-    public var messageSendAnimation: Int {
-        integerForKey(Self.messageSendAnimationKey)
+    public var messageSendAnimation: String {
+        stringForKey(Self.messageSendAnimationKey) ?? ""
     }
 
-    public func setMessageAnimation(_ int: Int) async {
-        await setInteger(int, Self.messageSendAnimationKey)
+    public func setMessageAnimation(_ string: String) async {
+        await setString(string, Self.messageSendAnimationKey)
     }
 }
 
