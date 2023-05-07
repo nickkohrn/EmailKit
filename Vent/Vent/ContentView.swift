@@ -7,70 +7,74 @@ struct ContentView: View {
     
     var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
-            ZStack {
-                VStack {
-                    Spacer()
-                    HStack(alignment: .bottom) {
-                        TextField(
-                            "Write something...",
-                            text: viewStore.binding(\.$input),
-                            prompt: Text("Write something..."),
-                            axis: .vertical
-                        )
-                        .padding()
-                        .background(
-                            RoundedRectangle(cornerRadius: 8)
-                                .fill(.clear)
-                        )
-                        Button {
-                            viewStore.send(.sendInput)
-                        } label: {
-                            Image(systemName: "arrow.up.circle.fill")
-                                .imageScale(.large)
-                                .fontWeight(.semibold)
-                        }
-                        .padding(.bottom)
-                        .disabled(viewStore.isSendButtonDisabled)
-                    }
-                }
-                if viewStore.isAnimatingInput {
+            NavigationStack {
+                ZStack {
                     VStack {
                         Spacer()
                         HStack(alignment: .bottom) {
                             TextField(
-                                "",
-                                text: .constant(viewStore.inputToAnimate),
-                                prompt: nil,
+                                "Write something...",
+                                text: viewStore.binding(\.$input),
+                                prompt: Text("Write something..."),
                                 axis: .vertical
                             )
                             .padding()
                             .background(
                                 RoundedRectangle(cornerRadius: 8)
-                                    .fill(Color.accentColor)
+                                    .fill(.clear)
                             )
                             Button {
-
+                                viewStore.send(.sendInput)
                             } label: {
                                 Image(systemName: "arrow.up.circle.fill")
                                     .imageScale(.large)
                                     .fontWeight(.semibold)
                             }
-                            .disabled(true)
-                            .opacity(0)
                             .padding(.bottom)
+                            .disabled(viewStore.isSendButtonDisabled)
+                            .buttonStyle(PushDownButtonStyle())
+                            .foregroundColor(.accentColor)
                         }
                     }
-                    .transition(
-                        .asymmetric(
-                            insertion: .identity,
-                            removal: .movingParts.move(edge: .top)
+                    if viewStore.isAnimatingInput {
+                        VStack {
+                            Spacer()
+                            HStack(alignment: .bottom) {
+                                TextField(
+                                    "",
+                                    text: .constant(viewStore.inputToAnimate),
+                                    prompt: nil,
+                                    axis: .vertical
+                                )
+                                .padding()
+                                .background(
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .fill(Color.accentColor)
+                                )
+                                Button {
+
+                                } label: {
+                                    Image(systemName: "arrow.up.circle.fill")
+                                        .imageScale(.large)
+                                        .fontWeight(.semibold)
+                                }
+                                .disabled(true)
+                                .opacity(0)
+                                .padding(.bottom)
+                            }
+                        }
+                        .transition(
+                            .asymmetric(
+                                insertion: .identity,
+                                removal: .movingParts.move(edge: .top)
+                            )
                         )
-                    )
+                    }
                 }
+                .font(.title)
+                .padding()
+                .edgesIgnoringSafeArea(.top)
             }
-            .font(.title)
-            .padding()
-            .edgesIgnoringSafeArea(.top)
         }
     }
 }
