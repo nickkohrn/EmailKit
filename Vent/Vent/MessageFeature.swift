@@ -2,8 +2,25 @@ import ComposableArchitecture
 import Foundation
 
 struct MessageFeature: ReducerProtocol {
+    enum Transition: String, Equatable, CaseIterable, Identifiable {
+        case move
+        case vanish
+
+        var id: String { rawValue }
+
+        var title: String { rawValue.localizedCapitalized }
+
+        var systemSymbolName: String {
+            switch self {
+            case .move: return "arrow.up.circle.fill"
+            case .vanish: return "circle.dotted"
+            }
+        }
+    }
+    
     struct State: Equatable {
         @BindingState var input = ""
+        @BindingState var transition: Transition = .move
         var inputToAnimate = ""
         var isAnimatingInput = false
         
