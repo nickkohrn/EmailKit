@@ -14,6 +14,7 @@ struct MessageFeature: ReducerProtocol {
         var accentColor: AccentColorSelection = .blue
         var route: Route?
         var showRoute = false
+        var blurMessageSendAnimation = false
         
         var isSendButtonDisabled: Bool {
             input.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
@@ -33,6 +34,7 @@ struct MessageFeature: ReducerProtocol {
         case sendInput
         case settingsButtonActivated
         case startAnimation
+        case updateUserSettings
     }
     
     @Dependency(\.continuousClock) var clock
@@ -49,22 +51,23 @@ struct MessageFeature: ReducerProtocol {
                 
             case .dismissRoute:
                 state.showRoute = false
-                return .none
+                return EffectTask(value: .updateUserSettings)
                 
             case .endAnimation:
                 state.isAnimatingInput = false
                 return .none
                 
             case .onAppear:
-                state.accentColor = userDefaults.selectedAccentColor
-                return .none
+                return .run { send in
+                    await userDefaults.registerInitialDefaults()
+                    await send(.updateUserSettings)
+                }
 
             case .route(.settings(.delegate(.dismiss))):
-                return EffectTask(value: .dismissRoute)
-
-            case .route(.settings(.delegate(.selectedAccentColor))):
-                state.accentColor = userDefaults.selectedAccentColor
-                return .none
+                return .concatenate(
+                    EffectTask(value: .updateUserSettings),
+                    EffectTask(value: .dismissRoute)
+                )
                 
             case .route:
                 return .none
@@ -87,6 +90,11 @@ struct MessageFeature: ReducerProtocol {
                     try await clock.sleep(for: .seconds(0.1))
                     await send(.endAnimation, animation: .default)
                 }
+
+            case .updateUserSettings:
+                state.accentColor = userDefaults.selectedAccentColor
+                state.blurMessageSendAnimation = userDefaults.blurMessageSendAnimation
+                return .none
                 
             }
         }

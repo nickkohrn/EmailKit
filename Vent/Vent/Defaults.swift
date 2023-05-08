@@ -4,6 +4,7 @@ import SwiftUI
 import XCTestDynamicOverlay
 
 public struct UserDefaultsClient {
+    public static let blurMessageSendAnimationKey = "blurMessageSendAnimationKey"
     public static let selectedAccentColorKey = "selectedAccentColorKey"
 
     public var arrayForKey: @Sendable (String) -> [Any]?
@@ -22,6 +23,12 @@ public struct UserDefaultsClient {
     public var setString: @Sendable (_ string: String, _ key: String) async -> Void
     public var stringForKey: @Sendable (String) -> String?
 
+    public func registerInitialDefaults() async {
+        await register([
+            Self.blurMessageSendAnimationKey: true
+        ])
+    }
+
     public var selectedAccentColor: AccentColorSelection {
         guard let rawValue = stringForKey(Self.selectedAccentColorKey) else { return .blue }
         guard let color = AccentColorSelection(rawValue: rawValue) else { return .blue }
@@ -30,6 +37,14 @@ public struct UserDefaultsClient {
 
     public func setSelectedAccentColor(_ color: AccentColorSelection) async {
         await setString(color.rawValue, Self.selectedAccentColorKey)
+    }
+
+    public var blurMessageSendAnimation: Bool {
+        boolForKey(Self.blurMessageSendAnimationKey)
+    }
+
+    public func setBlurMessageSendAnimation(_ enable: Bool) async {
+        await setBool(enable, Self.blurMessageSendAnimationKey)
     }
 }
 

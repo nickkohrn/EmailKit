@@ -3,20 +3,21 @@ import Foundation
 
 struct SettingsFeature: ReducerProtocol {
     struct State: Equatable {
+        @BindingState var enableMessageSendBlur = false
         var accentColorSelection: AccentColorSelectionFeature.State?
         var isAccentColorSelectionActive = false
         var selectedAccentColor: AccentColorSelection?
     }
 
-    enum Action: Equatable {
+    enum Action: Equatable, BindableAction {
         enum DelegateAction: Equatable {
             case dismiss
-            case selectedAccentColor
         }
 
         case accentColorSelection(AccentColorSelectionFeature.Action)
         case accentColorSelectionDismissed
         case accentColorSelectionTapped
+        case binding(BindingAction<State>)
         case delegate(DelegateAction)
         case dismissButtonActivated
         case onAppear
@@ -25,6 +26,8 @@ struct SettingsFeature: ReducerProtocol {
     @Dependency(\.userDefaults) var userDefaults
 
     var body: some ReducerProtocol<State, Action> {
+        BindingReducer()
+
         Reduce<State, Action> { state, action in
             switch action {
 
@@ -38,9 +41,17 @@ struct SettingsFeature: ReducerProtocol {
 
             case .accentColorSelection(.delegate(.selectedAccentColor)):
                 state.selectedAccentColor = userDefaults.selectedAccentColor
-                return EffectTask(value: .delegate(.selectedAccentColor))
+                return .none
 
             case .accentColorSelection:
+                return .none
+
+            case .binding(\.$enableMessageSendBlur):
+                return .fireAndForget { [enabled = state.enableMessageSendBlur] in
+                    await userDefaults.setBlurMessageSendAnimation(enabled)
+                }
+
+            case .binding:
                 return .none
 
             case .delegate:
@@ -51,6 +62,7 @@ struct SettingsFeature: ReducerProtocol {
 
             case .onAppear:
                 state.selectedAccentColor = userDefaults.selectedAccentColor
+                state.enableMessageSendBlur = userDefaults.blurMessageSendAnimation
                 return .none
 
             }

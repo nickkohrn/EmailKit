@@ -22,9 +22,6 @@ struct SettingsView: View {
                             )
                         ) {
                             if let selectedAccentColor = viewStore.selectedAccentColor {
-                                HStack {
-
-                                }
                                 LabeledContent {
                                     Label {
                                         Text(selectedAccentColor.color.description.localizedCapitalized)
@@ -39,6 +36,14 @@ struct SettingsView: View {
                             } else {
                                 Text("Accent Color")
                             }
+                        }
+                    }
+                    Section {
+                        VStack(alignment: .leading) {
+                            Toggle("Blur Animation", isOn: viewStore.binding(\.$enableMessageSendBlur))
+                            Text("This controls whether a blur animation occurs when simulating a message being sent.")
+                                .font(.footnote)
+                                .foregroundColor(.secondary)
                         }
                     }
                 }

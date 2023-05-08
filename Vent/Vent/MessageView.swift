@@ -67,7 +67,7 @@ struct MessageView: View {
                         .transition(
                             .asymmetric(
                                 insertion: .identity,
-                                removal: .movingParts.move(edge: .top).combined(with: .movingParts.blur)
+                                removal: messageRemovalTransition(viewStore: viewStore)
                             )
                         )
                         .zIndex(1)
@@ -120,6 +120,16 @@ struct MessageView: View {
         Image(systemName: "paperplane.circle.fill")
             .imageScale(.large)
             .fontWeight(.semibold)
+    }
+
+    private func messageRemovalTransition(
+        viewStore: ViewStoreOf<MessageFeature>
+    ) -> AnyTransition {
+        if viewStore.blurMessageSendAnimation {
+            return .movingParts.move(edge: .top).combined(with: .movingParts.blur)
+        } else {
+            return .movingParts.move(edge: .top)
+        }
     }
 }
 
