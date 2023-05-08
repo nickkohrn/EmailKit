@@ -10,8 +10,11 @@
 		F90558A12A086336002B63E2 /* AccentColorSelectionFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90558A02A086336002B63E2 /* AccentColorSelectionFeature.swift */; };
 		F90558A32A0864A7002B63E2 /* AccentColorSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90558A22A0864A7002B63E2 /* AccentColorSelectionView.swift */; };
 		F90558A72A093096002B63E2 /* Color+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90558A62A093096002B63E2 /* Color+Extensions.swift */; };
+		F90558A92A094621002B63E2 /* SettingsFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90558A82A094621002B63E2 /* SettingsFeature.swift */; };
+		F90558AB2A09466C002B63E2 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90558AA2A09466C002B63E2 /* SettingsView.swift */; };
 		F913FED82A0803B800466A88 /* PushDownButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F913FED72A0803B800466A88 /* PushDownButtonStyle.swift */; };
 		F913FEDA2A08201200466A88 /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = F913FED92A08201200466A88 /* Defaults.swift */; };
+		F960131F2A094FA500873006 /* AccentColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F960131E2A094FA500873006 /* AccentColor.swift */; };
 		F97987C92A070F53001D2C6C /* VentApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97987C82A070F53001D2C6C /* VentApp.swift */; };
 		F97987CB2A070F53001D2C6C /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97987CA2A070F53001D2C6C /* MessageView.swift */; };
 		F97987CD2A070F54001D2C6C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F97987CC2A070F54001D2C6C /* Assets.xcassets */; };
@@ -45,8 +48,11 @@
 		F90558A02A086336002B63E2 /* AccentColorSelectionFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccentColorSelectionFeature.swift; sourceTree = "<group>"; };
 		F90558A22A0864A7002B63E2 /* AccentColorSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccentColorSelectionView.swift; sourceTree = "<group>"; };
 		F90558A62A093096002B63E2 /* Color+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extensions.swift"; sourceTree = "<group>"; };
+		F90558A82A094621002B63E2 /* SettingsFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsFeature.swift; sourceTree = "<group>"; };
+		F90558AA2A09466C002B63E2 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		F913FED72A0803B800466A88 /* PushDownButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushDownButtonStyle.swift; sourceTree = "<group>"; };
 		F913FED92A08201200466A88 /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
+		F960131E2A094FA500873006 /* AccentColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccentColor.swift; sourceTree = "<group>"; };
 		F97987C52A070F53001D2C6C /* Vent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Vent.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F97987C82A070F53001D2C6C /* VentApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VentApp.swift; sourceTree = "<group>"; };
 		F97987CA2A070F53001D2C6C /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
@@ -117,7 +123,10 @@
 				F913FED92A08201200466A88 /* Defaults.swift */,
 				F90558A02A086336002B63E2 /* AccentColorSelectionFeature.swift */,
 				F90558A22A0864A7002B63E2 /* AccentColorSelectionView.swift */,
+				F90558A82A094621002B63E2 /* SettingsFeature.swift */,
+				F90558AA2A09466C002B63E2 /* SettingsView.swift */,
 				F90558A62A093096002B63E2 /* Color+Extensions.swift */,
+				F960131E2A094FA500873006 /* AccentColor.swift */,
 				F97987CC2A070F54001D2C6C /* Assets.xcassets */,
 				F97987CE2A070F54001D2C6C /* Preview Content */,
 			);
@@ -292,7 +301,10 @@
 				F97987CB2A070F53001D2C6C /* MessageView.swift in Sources */,
 				F90558A72A093096002B63E2 /* Color+Extensions.swift in Sources */,
 				F913FED82A0803B800466A88 /* PushDownButtonStyle.swift in Sources */,
+				F90558AB2A09466C002B63E2 /* SettingsView.swift in Sources */,
+				F960131F2A094FA500873006 /* AccentColor.swift in Sources */,
 				F913FEDA2A08201200466A88 /* Defaults.swift in Sources */,
+				F90558A92A094621002B63E2 /* SettingsFeature.swift in Sources */,
 				F97987F62A072AEC001D2C6C /* MessageFeature.swift in Sources */,
 				F97987C92A070F53001D2C6C /* VentApp.swift in Sources */,
 			);

@@ -33,7 +33,7 @@ struct MessageView: View {
                                 sendButtonImage()
                             }
                             .frame(minWidth: 44, minHeight: 44)
-                            .tint(viewStore.accentColor)
+                            .tint(viewStore.accentColor.color)
                             .disabled(viewStore.isSendButtonDisabled)
                         }
                     }
@@ -51,7 +51,7 @@ struct MessageView: View {
                                 .padding()
                                 .background(
                                     RoundedRectangle(cornerRadius: 8)
-                                        .fill(viewStore.accentColor)
+                                        .fill(viewStore.accentColor.color)
                                 )
                                 Button {
 
@@ -80,14 +80,37 @@ struct MessageView: View {
                 .toolbarBackground(.visible, for: .navigationBar)
                 .onAppear { viewStore.send(.onAppear) }
                 .toolbar {
-                    ToolbarItem(placement: .primaryAction) {
+                    ToolbarItem(placement: .navigationBarLeading) {
                         Button {
-                            
+                            viewStore.send(.settingsButtonActivated)
                         } label: {
-                            Label("Settings", systemImage: "gearshape.circle")
+                            Label("Settings", systemImage: "gearshape")
                         }
                     }
                 }
+                .sheet(
+                    isPresented: viewStore.binding(
+                        get: \.showRoute,
+                        send: MessageFeature.Action.dismissRoute
+                    ),
+                    content: {
+                        IfLetStore(
+                            store.scope(
+                                state: \.route,
+                                action: MessageFeature.Action.route
+                            )
+                        ) { routeStore in
+                            SwitchStore(routeStore) {
+                                CaseLet(
+                                    state: /MessageFeature.State.Route.settings,
+                                    action: MessageFeature.Action.Route.settings
+                                ) { store in
+                                    SettingsView(store: store)
+                                }
+                            }
+                        }
+                    }
+                )
             }
         }
     }

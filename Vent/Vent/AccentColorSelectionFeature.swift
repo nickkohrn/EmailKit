@@ -4,48 +4,38 @@ import SwiftUI
 
 struct AccentColorSelectionFeature: ReducerProtocol {
     struct State: Equatable {
-        @BindingState var selectedColor: Color = .blue
-
-        var colors: [Color] {
-            [.blue,
-             .brown,
-             .cyan,
-             .green,
-             .indigo,
-             .mint,
-             .orange,
-             .pink,
-             .purple,
-             .red,
-             .teal,
-             .yellow]
-        }
+        let colors = AccentColorSelection.allCases
+        var selectedColor: AccentColorSelection = .blue
     }
 
-    enum Action: Equatable, BindableAction {
-        case binding(BindingAction<State>)
+    enum Action: Equatable {
+        enum DelegateAction: Equatable {
+            case selectedAccentColor
+        }
+
+        case delegate(DelegateAction)
         case onAppear
-        case selectedColor(Color)
+        case selectedColor(AccentColorSelection)
     }
 
     @Dependency(\.userDefaults) var userDefaults
 
     var body: some ReducerProtocol<State, Action> {
-        BindingReducer()
-
         Reduce<State, Action> { state, action in
             switch action {
 
-            case .binding:
+            case .delegate:
                 return .none
 
             case .onAppear:
+                state.selectedColor = userDefaults.accentColor
                 return .none
 
             case .selectedColor(let color):
                 state.selectedColor = color
-                return .fireAndForget {
+                return .run { send in
                     await userDefaults.setAccentColor(color)
+                    await send(.delegate(.selectedAccentColor))
                 }
 
             }

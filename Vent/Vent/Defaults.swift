@@ -4,7 +4,7 @@ import SwiftUI
 import XCTestDynamicOverlay
 
 public struct UserDefaultsClient {
-    public static let accentColorKey = "accentColorKey"
+    public static let selectedAccentColorKey = "selectedAccentColorKey"
 
     public var arrayForKey: @Sendable (String) -> [Any]?
     public var boolForKey: @Sendable (String) -> Bool
@@ -22,16 +22,14 @@ public struct UserDefaultsClient {
     public var setString: @Sendable (_ string: String, _ key: String) async -> Void
     public var stringForKey: @Sendable (String) -> String?
 
-    public var accentColor: Color? {
-        guard let colorData = dataForKey(Self.accentColorKey) else { return nil }
-        guard let uiColor = try? NSKeyedUnarchiver.unarchivedObject(ofClass: UIColor.self, from: colorData) else { return nil }
-        return Color(uiColor: uiColor)
+    public var accentColor: AccentColorSelection {
+        guard let rawValue = stringForKey(Self.selectedAccentColorKey) else { return .blue }
+        guard let color = AccentColorSelection(rawValue: rawValue) else { return .blue }
+        return color
     }
 
-    public func setAccentColor(_ color: Color) async {
-        let uiColor = UIColor(color)
-        guard let colorData = try? NSKeyedArchiver.archivedData(withRootObject: uiColor, requiringSecureCoding: true) else { return }
-        await setData(colorData, Self.accentColorKey)
+    public func setAccentColor(_ color: AccentColorSelection) async {
+        await setString(color.rawValue, Self.selectedAccentColorKey)
     }
 }
 

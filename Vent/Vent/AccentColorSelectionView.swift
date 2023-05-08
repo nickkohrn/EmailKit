@@ -9,23 +9,23 @@ struct AccentColorSelectionView: View {
             NavigationStack {
                 List {
                     Section {
-                        ForEach(viewStore.colors, id: \.self) { color in
+                        ForEach(viewStore.colors) { color in
                             Button {
                                 viewStore.send(.selectedColor(color))
                             } label: {
                                 HStack {
                                     Label {
-                                        Text(color.description.localizedCapitalized)
+                                        Text(color.color.description.localizedCapitalized)
                                             .foregroundColor(.primary)
                                     } icon: {
                                         Image(systemName: "square.fill")
                                             .imageScale(.large)
-                                            .foregroundColor(color)
+                                            .foregroundColor(color.color)
                                     }
                                     Spacer()
                                     if viewStore.selectedColor == color {
                                         Image(systemName: "checkmark.circle.fill")
-                                            .foregroundColor(viewStore.selectedColor)
+                                            .foregroundColor(viewStore.selectedColor.color)
                                     }
                                 }
                             }
@@ -35,6 +35,7 @@ struct AccentColorSelectionView: View {
                 }
                 .navigationTitle("Accent Color")
                 .navigationBarTitleDisplayMode(.inline)
+                .onAppear { viewStore.send(.onAppear) }
             }
         }
     }
