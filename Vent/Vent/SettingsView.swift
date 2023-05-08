@@ -9,6 +9,11 @@ struct SettingsView: View {
             NavigationStack {
                 List {
                     Section {
+                        Text("Your privacy is important. Your data is kept on your device. Everything you type disappears once you tap the send button.")
+                    } header: {
+                        Label("Privacy", systemImage: "lock.shield.fill")
+                    }
+                    Section {
                         Picker("Interface Style", selection: viewStore.binding(\.$selectedInterfaceStyle)) {
                             ForEach(viewStore.supportedInterfaceStyles) { style in
                                 Text(style.title)
@@ -19,6 +24,19 @@ struct SettingsView: View {
                             .font(.footnote)
                             .foregroundColor(.secondary)
                             .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                    Section {
+                        if viewStore.selectedInterfaceStyle == .message {
+                            Toggle("Blur Animation", isOn: viewStore.binding(\.$enableMessageSendBlur))
+                                .tint(viewStore.selectedAccentColor.color)
+                            Text("This controls whether a blur animation occurs when the message interface style is used.")
+                                .font(.footnote)
+                                .foregroundColor(.secondary)
+                        }
+                    }
+                    Section {
+                        Toggle("Haptic Feedback", isOn: viewStore.binding(\.$enableHapticFeedback))
+                            .tint(viewStore.selectedAccentColor.color)
                     }
                     Section {
                         NavigationLink(
@@ -33,29 +51,17 @@ struct SettingsView: View {
                                 send: { $0 ? .accentColorSelectionTapped : .accentColorSelectionDismissed }
                             )
                         ) {
-                            if let selectedAccentColor = viewStore.selectedAccentColor {
-                                LabeledContent {
-                                    Label {
-                                        Text(selectedAccentColor.color.description.localizedCapitalized)
-                                    } icon: {
-                                        Image(systemName: "square.fill")
-                                            .imageScale(.large)
-                                            .foregroundColor(selectedAccentColor.color)
-                                    }
-                                } label: {
-                                    Text("Accent Color")
+                            LabeledContent {
+                                Label {
+                                    Text(viewStore.selectedAccentColor.color.description.localizedCapitalized)
+                                } icon: {
+                                    Image(systemName: "square.fill")
+                                        .imageScale(.large)
+                                        .foregroundColor(viewStore.selectedAccentColor.color)
                                 }
-                            } else {
+                            } label: {
                                 Text("Accent Color")
                             }
-                        }
-                    }
-                    Section {
-                        if viewStore.selectedInterfaceStyle == .message {
-                            Toggle("Blur Animation", isOn: viewStore.binding(\.$enableMessageSendBlur))
-                            Text("This controls whether a blur animation occurs when the message interface style is used.")
-                                .font(.footnote)
-                                .foregroundColor(.secondary)
                         }
                     }
                 }

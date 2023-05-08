@@ -8,7 +8,7 @@ struct SettingsFeature: ReducerProtocol {
         @BindingState var selectedInterfaceStyle = InterfaceStyleSelection.message
         var accentColorSelection: AccentColorSelectionFeature.State?
         var isAccentColorSelectionActive = false
-        var selectedAccentColor: AccentColorSelection?
+        var selectedAccentColor: AccentColorSelection = .blue
         let supportedInterfaceStyles = InterfaceStyleSelection.allCases
     }
 
