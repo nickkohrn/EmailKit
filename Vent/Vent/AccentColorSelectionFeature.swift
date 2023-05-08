@@ -2,7 +2,7 @@ import ComposableArchitecture
 import Foundation
 import SwiftUI
 
-struct SettingsFeature: ReducerProtocol {
+struct AccentColorSelectionFeature: ReducerProtocol {
     struct State: Equatable {
         @BindingState var selectedColor: Color = .blue
 
@@ -25,6 +25,7 @@ struct SettingsFeature: ReducerProtocol {
     enum Action: Equatable, BindableAction {
         case binding(BindingAction<State>)
         case onAppear
+        case selectedColor(Color)
     }
 
     @Dependency(\.userDefaults) var userDefaults
@@ -40,6 +41,12 @@ struct SettingsFeature: ReducerProtocol {
 
             case .onAppear:
                 return .none
+
+            case .selectedColor(let color):
+                state.selectedColor = color
+                return .fireAndForget {
+                    await userDefaults.setAccentColor(color)
+                }
 
             }
         }

@@ -79,6 +79,15 @@ struct ContentView: View {
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbarBackground(.visible, for: .navigationBar)
                 .onAppear { viewStore.send(.onAppear) }
+                .toolbar {
+                    ToolbarItem(placement: .primaryAction) {
+                        Button {
+                            
+                        } label: {
+                            Label("Settings", systemImage: "gearshape.circle")
+                        }
+                    }
+                }
             }
         }
     }
