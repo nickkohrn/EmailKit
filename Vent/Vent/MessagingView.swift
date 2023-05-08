@@ -8,73 +8,12 @@ struct MessagingView: View {
     var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
             NavigationStack {
-                ZStack {
-                    VStack {
-                        Spacer()
-                        HStack(alignment: .bottom) {
-                            TextField(
-                                "Write something...",
-                                text: viewStore.binding(\.$input),
-                                prompt: Text("Write something..."),
-                                axis: .vertical
-                            )
-                            .padding()
-                            .background(
-                                RoundedRectangle(cornerRadius: 8)
-                                    .fill(.clear)
-                            )
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 8)
-                                    .stroke(Color.secondary, lineWidth: 0.5)
-                            )
-                            Button {
-                                viewStore.send(.sendInput)
-                            } label: {
-                                sendButtonImage()
-                            }
-                            .frame(minWidth: 44, minHeight: 44)
-                            .tint(viewStore.accentColor.color)
-                            .disabled(viewStore.isSendButtonDisabled)
-                        }
-                    }
-                    if viewStore.isAnimatingInput {
-                        VStack {
-                            Spacer()
-                            HStack(alignment: .bottom) {
-                                TextField(
-                                    "Write something...",
-                                    text: .constant(viewStore.inputToAnimate),
-                                    prompt: nil,
-                                    axis: .vertical
-                                )
-                                .foregroundColor(.white)
-                                .padding()
-                                .background(
-                                    RoundedRectangle(cornerRadius: 8)
-                                        .fill(viewStore.accentColor.color)
-                                )
-                                Button {
-
-                                } label: {
-                                    sendButtonImage()
-                                }
-                                .frame(minWidth: 44, minHeight: 44)
-                                .disabled(true)
-                                .opacity(0)
-                                .padding(.bottom)
-                            }
-                        }
-                        .transition(
-                            .asymmetric(
-                                insertion: .identity,
-                                removal: messageRemovalTransition(viewStore: viewStore)
-                            )
-                        )
-                        .zIndex(1)
+                Group {
+                    switch viewStore.selectedInterfaceStyle {
+                    case .message: messageLayout(viewStore: viewStore)
+                    case .vanish: Color.red.edgesIgnoringSafeArea(.all)
                     }
                 }
-                .padding()
-                .edgesIgnoringSafeArea(.top)
                 .navigationTitle("Let It Go")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbarBackground(.visible, for: .navigationBar)
@@ -130,6 +69,79 @@ struct MessagingView: View {
         } else {
             return .movingParts.move(edge: .top)
         }
+    }
+
+    @ViewBuilder
+    private func messageLayout(
+        viewStore: ViewStoreOf<MessagingFeature>
+    ) -> some View {
+        ZStack {
+            VStack {
+                Spacer()
+                HStack(alignment: .bottom) {
+                    TextField(
+                        "Write something...",
+                        text: viewStore.binding(\.$input),
+                        prompt: Text("Write something..."),
+                        axis: .vertical
+                    )
+                    .padding()
+                    .background(
+                        RoundedRectangle(cornerRadius: 8)
+                            .fill(.clear)
+                    )
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.secondary, lineWidth: 0.5)
+                    )
+                    Button {
+                        viewStore.send(.sendInput)
+                    } label: {
+                        sendButtonImage()
+                    }
+                    .frame(minWidth: 44, minHeight: 44)
+                    .tint(viewStore.accentColor.color)
+                    .disabled(viewStore.isSendButtonDisabled)
+                }
+            }
+            if viewStore.isAnimatingInput {
+                VStack {
+                    Spacer()
+                    HStack(alignment: .bottom) {
+                        TextField(
+                            "Write something...",
+                            text: .constant(viewStore.inputToAnimate),
+                            prompt: nil,
+                            axis: .vertical
+                        )
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(
+                            RoundedRectangle(cornerRadius: 8)
+                                .fill(viewStore.accentColor.color)
+                        )
+                        Button {
+
+                        } label: {
+                            sendButtonImage()
+                        }
+                        .frame(minWidth: 44, minHeight: 44)
+                        .disabled(true)
+                        .opacity(0)
+                        .padding(.bottom)
+                    }
+                }
+                .transition(
+                    .asymmetric(
+                        insertion: .identity,
+                        removal: messageRemovalTransition(viewStore: viewStore)
+                    )
+                )
+                .zIndex(1)
+            }
+        }
+        .padding()
+        .edgesIgnoringSafeArea(.top)
     }
 }
 

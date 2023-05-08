@@ -15,8 +15,10 @@ struct SettingsView: View {
                                     .tag(style)
                             }
                         }
-                    } footer: {
                         Text(viewStore.selectedInterfaceStyle.explanation)
+                            .font(.footnote)
+                            .foregroundColor(.secondary)
+                            .frame(maxWidth: .infinity, alignment: .leading)
                     }
                     Section {
                         NavigationLink(
@@ -50,12 +52,10 @@ struct SettingsView: View {
                     }
                     Section {
                         if viewStore.selectedInterfaceStyle == .message {
-                            VStack(alignment: .leading) {
-                                Toggle("Blur Animation", isOn: viewStore.binding(\.$enableMessageSendBlur))
-                                Text("This controls whether a blur animation occurs when the message interface style is used.")
-                                    .font(.footnote)
-                                    .foregroundColor(.secondary)
-                            }
+                            Toggle("Blur Animation", isOn: viewStore.binding(\.$enableMessageSendBlur))
+                            Text("This controls whether a blur animation occurs when the message interface style is used.")
+                                .font(.footnote)
+                                .foregroundColor(.secondary)
                         }
                     }
                 }

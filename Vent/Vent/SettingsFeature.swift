@@ -13,6 +13,7 @@ struct SettingsFeature: ReducerProtocol {
 
     enum Action: Equatable, BindableAction {
         enum DelegateAction: Equatable {
+            case selectedInterfaceStyle
             case dismiss
         }
 
@@ -52,6 +53,14 @@ struct SettingsFeature: ReducerProtocol {
                 return .fireAndForget { [enabled = state.enableMessageSendBlur] in
                     await userDefaults.setBlurMessageSendAnimation(enabled)
                 }
+
+            case .binding(\.$selectedInterfaceStyle):
+                return .concatenate(
+                    .fireAndForget { [style = state.selectedInterfaceStyle] in
+                        await userDefaults.setSelectedInterfaceStyle(style)
+                    },
+                    EffectTask(value: .delegate(.selectedInterfaceStyle))
+                )
 
             case .binding:
                 return .none
