@@ -2,7 +2,7 @@ import ComposableArchitecture
 import Foundation
 import SwiftUI
 
-struct MessageFeature: ReducerProtocol {
+struct MessagingFeature: ReducerProtocol {
     struct State: Equatable {
         enum Route: Equatable {
             case settings(SettingsFeature.State)
@@ -15,6 +15,7 @@ struct MessageFeature: ReducerProtocol {
         var route: Route?
         var showRoute = false
         var blurMessageSendAnimation = false
+        var selectedInterfaceStyle = InterfaceStyleSelection.message
         
         var isSendButtonDisabled: Bool {
             input.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
@@ -37,7 +38,6 @@ struct MessageFeature: ReducerProtocol {
         case updateUserSettings
     }
     
-    @Dependency(\.continuousClock) var clock
     @Dependency(\.userDefaults) var userDefaults
     
     var body: some ReducerProtocol<State, Action> {
@@ -68,6 +68,10 @@ struct MessageFeature: ReducerProtocol {
                     EffectTask(value: .updateUserSettings),
                     EffectTask(value: .dismissRoute)
                 )
+
+            case .route(.settings(.delegate(.selectedInterfaceStyle))):
+                state.selectedInterfaceStyle = userDefaults.selectedInterfaceStyle
+                return .none
                 
             case .route:
                 return .none
@@ -87,13 +91,13 @@ struct MessageFeature: ReducerProtocol {
                 state.inputToAnimate = state.input
                 state.input = ""
                 return .run { send in
-                    try await clock.sleep(for: .seconds(0.1))
                     await send(.endAnimation, animation: .default)
                 }
 
             case .updateUserSettings:
                 state.accentColor = userDefaults.selectedAccentColor
                 state.blurMessageSendAnimation = userDefaults.blurMessageSendAnimation
+                state.selectedInterfaceStyle = userDefaults.selectedInterfaceStyle
                 return .none
                 
             }

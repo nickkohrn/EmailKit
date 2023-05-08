@@ -4,13 +4,16 @@ import Foundation
 struct SettingsFeature: ReducerProtocol {
     struct State: Equatable {
         @BindingState var enableMessageSendBlur = false
+        @BindingState var selectedInterfaceStyle = InterfaceStyleSelection.message
         var accentColorSelection: AccentColorSelectionFeature.State?
         var isAccentColorSelectionActive = false
         var selectedAccentColor: AccentColorSelection?
+        let supportedInterfaceStyles = InterfaceStyleSelection.allCases
     }
 
     enum Action: Equatable, BindableAction {
         enum DelegateAction: Equatable {
+            case selectedInterfaceStyle
             case dismiss
         }
 
@@ -51,6 +54,14 @@ struct SettingsFeature: ReducerProtocol {
                     await userDefaults.setBlurMessageSendAnimation(enabled)
                 }
 
+            case .binding(\.$selectedInterfaceStyle):
+                return .concatenate(
+                    .fireAndForget { [style = state.selectedInterfaceStyle] in
+                        await userDefaults.setSelectedInterfaceStyle(style)
+                    },
+                    EffectTask(value: .delegate(.selectedInterfaceStyle))
+                )
+
             case .binding:
                 return .none
 
@@ -63,6 +74,7 @@ struct SettingsFeature: ReducerProtocol {
             case .onAppear:
                 state.selectedAccentColor = userDefaults.selectedAccentColor
                 state.enableMessageSendBlur = userDefaults.blurMessageSendAnimation
+                state.selectedInterfaceStyle = userDefaults.selectedInterfaceStyle
                 return .none
 
             }
