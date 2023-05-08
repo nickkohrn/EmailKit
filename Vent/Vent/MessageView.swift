@@ -2,7 +2,7 @@ import ComposableArchitecture
 import Pow
 import SwiftUI
 
-struct ContentView: View {
+struct MessageView: View {
     let store: StoreOf<MessageFeature>
     
     var body: some View {
@@ -103,13 +103,13 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            ContentView(store: .init(
+            MessageView(store: .init(
                 initialState: .init(),
                 reducer: MessageFeature()
             ))
             .previewDisplayName("Empty")
             
-            ContentView(store: .init(
+            MessageView(store: .init(
                 initialState: .init(input: "This is a message."),
                 reducer: MessageFeature()
             ))

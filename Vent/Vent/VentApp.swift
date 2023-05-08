@@ -5,7 +5,7 @@ import SwiftUI
 struct VentApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView(store: .init(
+            MessageView(store: .init(
                 initialState: .init(),
                 reducer: MessageFeature()
             ))
