@@ -38,7 +38,6 @@ struct MessagingFeature: ReducerProtocol {
         case updateUserSettings
     }
     
-    @Dependency(\.continuousClock) var clock
     @Dependency(\.userDefaults) var userDefaults
     
     var body: some ReducerProtocol<State, Action> {
@@ -92,7 +91,6 @@ struct MessagingFeature: ReducerProtocol {
                 state.inputToAnimate = state.input
                 state.input = ""
                 return .run { send in
-                    try await clock.sleep(for: .seconds(0.1))
                     await send(.endAnimation, animation: .default)
                 }
 
