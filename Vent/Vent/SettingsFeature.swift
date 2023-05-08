@@ -4,9 +4,11 @@ import Foundation
 struct SettingsFeature: ReducerProtocol {
     struct State: Equatable {
         @BindingState var enableMessageSendBlur = false
+        @BindingState var selectedInterfaceStyle = InterfaceStyleSelection.message
         var accentColorSelection: AccentColorSelectionFeature.State?
         var isAccentColorSelectionActive = false
         var selectedAccentColor: AccentColorSelection?
+        let supportedInterfaceStyles = InterfaceStyleSelection.allCases
     }
 
     enum Action: Equatable, BindableAction {
@@ -63,6 +65,7 @@ struct SettingsFeature: ReducerProtocol {
             case .onAppear:
                 state.selectedAccentColor = userDefaults.selectedAccentColor
                 state.enableMessageSendBlur = userDefaults.blurMessageSendAnimation
+                state.selectedInterfaceStyle = userDefaults.selectedInterfaceStyle
                 return .none
 
             }

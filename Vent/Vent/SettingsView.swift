@@ -9,6 +9,16 @@ struct SettingsView: View {
             NavigationStack {
                 List {
                     Section {
+                        Picker("Interface Style", selection: viewStore.binding(\.$selectedInterfaceStyle)) {
+                            ForEach(viewStore.supportedInterfaceStyles) { style in
+                                Text(style.title)
+                                    .tag(style)
+                            }
+                        }
+                    } footer: {
+                        Text(viewStore.selectedInterfaceStyle.explanation)
+                    }
+                    Section {
                         NavigationLink(
                             destination: IfLetStore(store.scope(
                                 state: \.accentColorSelection,
@@ -39,14 +49,17 @@ struct SettingsView: View {
                         }
                     }
                     Section {
-                        VStack(alignment: .leading) {
-                            Toggle("Blur Animation", isOn: viewStore.binding(\.$enableMessageSendBlur))
-                            Text("This controls whether a blur animation occurs when simulating a message being sent.")
-                                .font(.footnote)
-                                .foregroundColor(.secondary)
+                        if viewStore.selectedInterfaceStyle == .message {
+                            VStack(alignment: .leading) {
+                                Toggle("Blur Animation", isOn: viewStore.binding(\.$enableMessageSendBlur))
+                                Text("This controls whether a blur animation occurs when the message interface style is used.")
+                                    .font(.footnote)
+                                    .foregroundColor(.secondary)
+                            }
                         }
                     }
                 }
+                .animation(.default, value: viewStore.selectedInterfaceStyle)
                 .navigationTitle("Settings")
                 .navigationBarTitleDisplayMode(.inline)
                 .onAppear { viewStore.send(.onAppear) }
