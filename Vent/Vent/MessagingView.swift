@@ -2,8 +2,8 @@ import ComposableArchitecture
 import Pow
 import SwiftUI
 
-struct MessageView: View {
-    let store: StoreOf<MessageFeature>
+struct MessagingView: View {
+    let store: StoreOf<MessagingFeature>
     
     var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
@@ -91,19 +91,19 @@ struct MessageView: View {
                 .sheet(
                     isPresented: viewStore.binding(
                         get: \.showRoute,
-                        send: MessageFeature.Action.dismissRoute
+                        send: MessagingFeature.Action.dismissRoute
                     ),
                     content: {
                         IfLetStore(
                             store.scope(
                                 state: \.route,
-                                action: MessageFeature.Action.route
+                                action: MessagingFeature.Action.route
                             )
                         ) { routeStore in
                             SwitchStore(routeStore) {
                                 CaseLet(
-                                    state: /MessageFeature.State.Route.settings,
-                                    action: MessageFeature.Action.Route.settings
+                                    state: /MessagingFeature.State.Route.settings,
+                                    action: MessagingFeature.Action.Route.settings
                                 ) { store in
                                     SettingsView(store: store)
                                 }
@@ -123,7 +123,7 @@ struct MessageView: View {
     }
 
     private func messageRemovalTransition(
-        viewStore: ViewStoreOf<MessageFeature>
+        viewStore: ViewStoreOf<MessagingFeature>
     ) -> AnyTransition {
         if viewStore.blurMessageSendAnimation {
             return .movingParts.move(edge: .top).combined(with: .movingParts.blur)
@@ -136,15 +136,15 @@ struct MessageView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            MessageView(store: .init(
+            MessagingView(store: .init(
                 initialState: .init(),
-                reducer: MessageFeature()
+                reducer: MessagingFeature()
             ))
             .previewDisplayName("Empty")
             
-            MessageView(store: .init(
+            MessagingView(store: .init(
                 initialState: .init(input: "This is a message."),
-                reducer: MessageFeature()
+                reducer: MessagingFeature()
             ))
             .previewDisplayName("Populated")
         }

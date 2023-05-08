@@ -2,7 +2,7 @@ import ComposableArchitecture
 import Foundation
 import SwiftUI
 
-struct MessageFeature: ReducerProtocol {
+struct MessagingFeature: ReducerProtocol {
     struct State: Equatable {
         enum Route: Equatable {
             case settings(SettingsFeature.State)
