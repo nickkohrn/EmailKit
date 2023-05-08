@@ -75,6 +75,7 @@ struct SettingsView: View {
                     }
                 }
             }
+            .accentColor(viewStore.selectedAccentColor.color)
         }
     }
 }

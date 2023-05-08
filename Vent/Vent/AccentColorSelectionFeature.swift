@@ -5,7 +5,7 @@ import SwiftUI
 struct AccentColorSelectionFeature: ReducerProtocol {
     struct State: Equatable {
         let colors = AccentColorSelection.allCases
-        var selectedColor: AccentColorSelection = .blue
+        var selectedAccentColor = AccentColorSelection.blue
     }
 
     enum Action: Equatable {
@@ -15,7 +15,7 @@ struct AccentColorSelectionFeature: ReducerProtocol {
 
         case delegate(DelegateAction)
         case onAppear
-        case selectedColor(AccentColorSelection)
+        case selectedAccentColor(AccentColorSelection)
     }
 
     @Dependency(\.userDefaults) var userDefaults
@@ -28,11 +28,11 @@ struct AccentColorSelectionFeature: ReducerProtocol {
                 return .none
 
             case .onAppear:
-                state.selectedColor = userDefaults.selectedAccentColor
+                state.selectedAccentColor = userDefaults.selectedAccentColor
                 return .none
 
-            case .selectedColor(let color):
-                state.selectedColor = color
+            case .selectedAccentColor(let color):
+                state.selectedAccentColor = color
                 return .run { send in
                     await userDefaults.setSelectedAccentColor(color)
                     await send(.delegate(.selectedAccentColor))

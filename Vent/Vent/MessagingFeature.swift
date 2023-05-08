@@ -11,7 +11,7 @@ struct MessagingFeature: ReducerProtocol {
         @BindingState var input = ""
         var inputToAnimate = ""
         var isAnimatingInput = false
-        var accentColor: AccentColorSelection = .blue
+        var selectedAccentColor: AccentColorSelection = .blue
         var route: Route?
         var showRoute = false
         var blurMessageSendAnimation = false
@@ -96,7 +96,7 @@ struct MessagingFeature: ReducerProtocol {
                 }
 
             case .updateUserSettings:
-                state.accentColor = userDefaults.selectedAccentColor
+                state.selectedAccentColor = userDefaults.selectedAccentColor
                 state.blurMessageSendAnimation = userDefaults.blurMessageSendAnimation
                 state.selectedInterfaceStyle = userDefaults.selectedInterfaceStyle
                 state.enableHapticFeedback = userDefaults.enableHapticFeedback

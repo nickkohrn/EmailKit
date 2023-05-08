@@ -55,6 +55,7 @@ struct MessagingView: View {
                     }
                 )
             }
+            .accentColor(viewStore.selectedAccentColor.color)
         }
     }
 
@@ -104,7 +105,7 @@ struct MessagingView: View {
                         sendButtonImage()
                     }
                     .frame(minWidth: 44, minHeight: 44)
-                    .tint(viewStore.accentColor.color)
+                    .tint(viewStore.selectedAccentColor.color)
                     .disabled(viewStore.isSendButtonDisabled)
                 }
             }
@@ -122,7 +123,7 @@ struct MessagingView: View {
                         .padding()
                         .background(
                             RoundedRectangle(cornerRadius: 8)
-                                .fill(viewStore.accentColor.color)
+                                .fill(viewStore.selectedAccentColor.color)
                         )
                         Button {
 
@@ -177,7 +178,7 @@ struct MessagingView: View {
                         sendButtonImage()
                     }
                     .frame(minWidth: 44, minHeight: 44)
-                    .tint(viewStore.accentColor.color)
+                    .tint(viewStore.selectedAccentColor.color)
                     .disabled(viewStore.isSendButtonDisabled)
                 }
                 if viewStore.isAnimatingInput {
@@ -192,7 +193,7 @@ struct MessagingView: View {
                         .padding()
                         .background(
                             RoundedRectangle(cornerRadius: 8)
-                                .fill(viewStore.accentColor.color)
+                                .fill(viewStore.selectedAccentColor.color)
                         )
                         Button {
 
@@ -207,7 +208,7 @@ struct MessagingView: View {
                     .transition(
                         .asymmetric(
                             insertion: .identity,
-                            removal: .movingParts.vanish(viewStore.accentColor.color)
+                            removal: .movingParts.vanish(viewStore.selectedAccentColor.color)
                         )
                     )
                     .zIndex(1)
