@@ -5,6 +5,7 @@ import XCTestDynamicOverlay
 
 public struct UserDefaultsClient {
     public static let blurMessageSendAnimationKey = "blurMessageSendAnimationKey"
+    public static let enableHapticFeedbackKey = "enableHapticFeedbackKey"
     public static let selectedInterfaceStyleKey = "selectedInterfaceStyleKey"
     public static let selectedAccentColorKey = "selectedAccentColorKey"
 
@@ -27,6 +28,7 @@ public struct UserDefaultsClient {
     public func registerInitialDefaults() async {
         await register([
             Self.blurMessageSendAnimationKey: true,
+            Self.enableHapticFeedbackKey: true,
             Self.selectedInterfaceStyleKey: InterfaceStyleSelection.message.rawValue,
             Self.selectedAccentColorKey: AccentColorSelection.blue.rawValue
         ])
@@ -58,6 +60,14 @@ public struct UserDefaultsClient {
 
     public func setSelectedInterfaceStyle(_ style: InterfaceStyleSelection) async {
         await setString(style.rawValue, Self.selectedInterfaceStyleKey)
+    }
+
+    public var enableHapticFeedback: Bool {
+        boolForKey(Self.enableHapticFeedbackKey)
+    }
+
+    public func setEnableHapticFeedback(_ enable: Bool) async {
+        await setBool(enable, Self.enableHapticFeedbackKey)
     }
 }
 

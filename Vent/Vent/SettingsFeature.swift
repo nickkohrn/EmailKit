@@ -3,6 +3,7 @@ import Foundation
 
 struct SettingsFeature: ReducerProtocol {
     struct State: Equatable {
+        @BindingState var enableHapticFeedback = false
         @BindingState var enableMessageSendBlur = false
         @BindingState var selectedInterfaceStyle = InterfaceStyleSelection.message
         var accentColorSelection: AccentColorSelectionFeature.State?
@@ -54,6 +55,11 @@ struct SettingsFeature: ReducerProtocol {
                     await userDefaults.setBlurMessageSendAnimation(enabled)
                 }
 
+            case .binding(\.$enableHapticFeedback):
+                return .fireAndForget { [enabled = state.enableHapticFeedback] in
+                    await userDefaults.setEnableHapticFeedback(enabled)
+                }
+
             case .binding(\.$selectedInterfaceStyle):
                 return .concatenate(
                     .fireAndForget { [style = state.selectedInterfaceStyle] in
@@ -75,6 +81,7 @@ struct SettingsFeature: ReducerProtocol {
                 state.selectedAccentColor = userDefaults.selectedAccentColor
                 state.enableMessageSendBlur = userDefaults.blurMessageSendAnimation
                 state.selectedInterfaceStyle = userDefaults.selectedInterfaceStyle
+                state.enableHapticFeedback = userDefaults.enableHapticFeedback
                 return .none
 
             }

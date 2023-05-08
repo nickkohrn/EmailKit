@@ -14,6 +14,10 @@ struct MessagingView: View {
                     case .vanish: vanishLayout(viewStore: viewStore)
                     }
                 }
+                .changeEffect(
+                    .feedback(hapticNotification: .success),
+                    value: viewStore.isAnimatingInput && viewStore.enableHapticFeedback
+                ) // Initiate haptics if animating and haptics enabled
                 .navigationTitle("Let It Go")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbarBackground(.visible, for: .navigationBar)

@@ -16,6 +16,7 @@ struct MessagingFeature: ReducerProtocol {
         var showRoute = false
         var blurMessageSendAnimation = false
         var selectedInterfaceStyle = InterfaceStyleSelection.message
+        var enableHapticFeedback = false
         
         var isSendButtonDisabled: Bool {
             input.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
@@ -98,6 +99,7 @@ struct MessagingFeature: ReducerProtocol {
                 state.accentColor = userDefaults.selectedAccentColor
                 state.blurMessageSendAnimation = userDefaults.blurMessageSendAnimation
                 state.selectedInterfaceStyle = userDefaults.selectedInterfaceStyle
+                state.enableHapticFeedback = userDefaults.enableHapticFeedback
                 return .none
                 
             }
