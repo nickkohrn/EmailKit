@@ -33,9 +33,8 @@ struct ContentView: View {
                                 sendButtonImage()
                             }
                             .frame(minWidth: 44, minHeight: 44)
+                            .tint(viewStore.accentColor)
                             .disabled(viewStore.isSendButtonDisabled)
-                            .buttonStyle(PushDownButtonStyle())
-                            .symbolRenderingMode(.multicolor)
                         }
                     }
                     if viewStore.isAnimatingInput {
@@ -52,7 +51,7 @@ struct ContentView: View {
                                 .padding()
                                 .background(
                                     RoundedRectangle(cornerRadius: 8)
-                                        .fill(Color.accentColor)
+                                        .fill(viewStore.accentColor)
                                 )
                                 Button {
 

@@ -1,15 +1,17 @@
 import ComposableArchitecture
 import Foundation
+import SwiftUI
 import XCTestDynamicOverlay
 
 public struct UserDefaultsClient {
-    public static let messageSendAnimationKey = "messageSendAnimationKey"
+    public static let accentColorKey = "accentColorKey"
 
     public var arrayForKey: @Sendable (String) -> [Any]?
     public var boolForKey: @Sendable (String) -> Bool
     public var dataForKey: @Sendable (String) -> Data?
     public var doubleForKey: @Sendable (String) -> Double
     public var integerForKey: @Sendable (String) -> Int
+    public var objectForKey: @Sendable (String) -> Any?
     public var register: @Sendable ([String: Any]) async -> Void
     public var remove: @Sendable (String) async -> Void
     public var setBool: @Sendable (Bool, String) async -> Void
@@ -20,12 +22,16 @@ public struct UserDefaultsClient {
     public var setString: @Sendable (_ string: String, _ key: String) async -> Void
     public var stringForKey: @Sendable (String) -> String?
 
-    public var messageSendAnimation: String {
-        stringForKey(Self.messageSendAnimationKey) ?? ""
+    public var accentColor: Color? {
+        guard let colorData = dataForKey(Self.accentColorKey) else { return nil }
+        guard let uiColor = try? NSKeyedUnarchiver.unarchivedObject(ofClass: UIColor.self, from: colorData) else { return nil }
+        return Color(uiColor: uiColor)
     }
 
-    public func setMessageAnimation(_ string: String) async {
-        await setString(string, Self.messageSendAnimationKey)
+    public func setAccentColor(_ color: Color) async {
+        let uiColor = UIColor(color)
+        guard let colorData = try? NSKeyedArchiver.archivedData(withRootObject: uiColor, requiringSecureCoding: true) else { return }
+        await setData(colorData, Self.accentColorKey)
     }
 }
 
@@ -38,6 +44,7 @@ extension UserDefaultsClient: DependencyKey {
             dataForKey: { defaults().data(forKey: $0) },
             doubleForKey: { defaults().double(forKey: $0) },
             integerForKey: { defaults().integer(forKey: $0) },
+            objectForKey: { defaults().object(forKey: $0) },
             register: { defaults().register(defaults: $0) },
             remove: { defaults().removeObject(forKey: $0) },
             setBool: { defaults().set($0, forKey: $1) },
@@ -56,6 +63,7 @@ extension UserDefaultsClient: DependencyKey {
         dataForKey: { _ in nil },
         doubleForKey: { _ in 0 },
         integerForKey: { _ in 0 },
+        objectForKey: { _ in nil },
         register: { _ in },
         remove: { _ in },
         setBool: { _, _ in },
@@ -73,6 +81,7 @@ extension UserDefaultsClient: DependencyKey {
         dataForKey: unimplemented("\(Self.self).dataForKey", placeholder: nil),
         doubleForKey: unimplemented("\(Self.self).doubleForKey", placeholder: 0),
         integerForKey: unimplemented("\(Self.self).integerForKey", placeholder: 0),
+        objectForKey: unimplemented("\(Self.self).objectForKey", placeholder: nil),
         register: unimplemented("\(Self.self).register"),
         remove: unimplemented("\(Self.self).remove"),
         setBool: unimplemented("\(Self.self).setBool"),

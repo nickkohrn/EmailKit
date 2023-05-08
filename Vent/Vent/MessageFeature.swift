@@ -1,11 +1,13 @@
 import ComposableArchitecture
 import Foundation
+import SwiftUI
 
 struct MessageFeature: ReducerProtocol {
     struct State: Equatable {
         @BindingState var input = ""
         var inputToAnimate = ""
         var isAnimatingInput = false
+        var accentColor: Color = .blue
         
         var isSendButtonDisabled: Bool {
             input.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
@@ -37,6 +39,7 @@ struct MessageFeature: ReducerProtocol {
                 return .none
 
             case .onAppear:
+                state.accentColor = userDefaults.accentColor ?? .blue
                 return .none
 
             case .sendInput:

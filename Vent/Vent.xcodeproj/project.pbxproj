@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F90558A12A086336002B63E2 /* SettingsFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90558A02A086336002B63E2 /* SettingsFeature.swift */; };
+		F90558A32A0864A7002B63E2 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90558A22A0864A7002B63E2 /* SettingsView.swift */; };
+		F90558A72A093096002B63E2 /* Color+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90558A62A093096002B63E2 /* Color+Extensions.swift */; };
 		F913FED82A0803B800466A88 /* PushDownButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F913FED72A0803B800466A88 /* PushDownButtonStyle.swift */; };
 		F913FEDA2A08201200466A88 /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = F913FED92A08201200466A88 /* Defaults.swift */; };
 		F97987C92A070F53001D2C6C /* VentApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97987C82A070F53001D2C6C /* VentApp.swift */; };
@@ -39,6 +42,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F90558A02A086336002B63E2 /* SettingsFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsFeature.swift; sourceTree = "<group>"; };
+		F90558A22A0864A7002B63E2 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		F90558A62A093096002B63E2 /* Color+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extensions.swift"; sourceTree = "<group>"; };
 		F913FED72A0803B800466A88 /* PushDownButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushDownButtonStyle.swift; sourceTree = "<group>"; };
 		F913FED92A08201200466A88 /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 		F97987C52A070F53001D2C6C /* Vent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Vent.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -109,6 +115,9 @@
 				F97987F52A072AEC001D2C6C /* MessageFeature.swift */,
 				F913FED72A0803B800466A88 /* PushDownButtonStyle.swift */,
 				F913FED92A08201200466A88 /* Defaults.swift */,
+				F90558A02A086336002B63E2 /* SettingsFeature.swift */,
+				F90558A22A0864A7002B63E2 /* SettingsView.swift */,
+				F90558A62A093096002B63E2 /* Color+Extensions.swift */,
 				F97987CC2A070F54001D2C6C /* Assets.xcassets */,
 				F97987CE2A070F54001D2C6C /* Preview Content */,
 			);
@@ -278,7 +287,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F90558A32A0864A7002B63E2 /* SettingsView.swift in Sources */,
+				F90558A12A086336002B63E2 /* SettingsFeature.swift in Sources */,
 				F97987CB2A070F53001D2C6C /* ContentView.swift in Sources */,
+				F90558A72A093096002B63E2 /* Color+Extensions.swift in Sources */,
 				F913FED82A0803B800466A88 /* PushDownButtonStyle.swift in Sources */,
 				F913FEDA2A08201200466A88 /* Defaults.swift in Sources */,
 				F97987F62A072AEC001D2C6C /* MessageFeature.swift in Sources */,
