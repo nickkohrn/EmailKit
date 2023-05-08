@@ -11,7 +11,7 @@ struct MessagingView: View {
                 Group {
                     switch viewStore.selectedInterfaceStyle {
                     case .message: messageLayout(viewStore: viewStore)
-                    case .vanish: Color.red.edgesIgnoringSafeArea(.all)
+                    case .vanish: vanishLayout(viewStore: viewStore)
                     }
                 }
                 .navigationTitle("Let It Go")
@@ -142,6 +142,75 @@ struct MessagingView: View {
         }
         .padding()
         .edgesIgnoringSafeArea(.top)
+    }
+
+    @ViewBuilder
+    private func vanishLayout(
+        viewStore: ViewStoreOf<MessagingFeature>
+    ) -> some View {
+        VStack {
+            Spacer()
+            ZStack {
+                HStack(alignment: .bottom) {
+                    TextField(
+                        "Write something...",
+                        text: viewStore.binding(\.$input),
+                        prompt: Text("Write something..."),
+                        axis: .vertical
+                    )
+                    .padding()
+                    .background(
+                        RoundedRectangle(cornerRadius: 8)
+                            .fill(.clear)
+                    )
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.secondary, lineWidth: 0.5)
+                    )
+                    Button {
+                        viewStore.send(.sendInput)
+                    } label: {
+                        sendButtonImage()
+                    }
+                    .frame(minWidth: 44, minHeight: 44)
+                    .tint(viewStore.accentColor.color)
+                    .disabled(viewStore.isSendButtonDisabled)
+                }
+                if viewStore.isAnimatingInput {
+                    HStack(alignment: .bottom) {
+                        TextField(
+                            "Write something...",
+                            text: .constant(viewStore.inputToAnimate),
+                            prompt: nil,
+                            axis: .vertical
+                        )
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(
+                            RoundedRectangle(cornerRadius: 8)
+                                .fill(viewStore.accentColor.color)
+                        )
+                        Button {
+
+                        } label: {
+                            sendButtonImage()
+                        }
+                        .frame(minWidth: 44, minHeight: 44)
+                        .disabled(true)
+                        .opacity(0)
+                        .padding(.bottom)
+                    }
+                    .transition(
+                        .asymmetric(
+                            insertion: .identity,
+                            removal: .movingParts.vanish(viewStore.accentColor.color)
+                        )
+                    )
+                    .zIndex(1)
+                }
+            }
+        }
+        .padding()
     }
 }
 

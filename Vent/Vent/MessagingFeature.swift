@@ -97,7 +97,7 @@ struct MessagingFeature: ReducerProtocol {
             case .updateUserSettings:
                 state.accentColor = userDefaults.selectedAccentColor
                 state.blurMessageSendAnimation = userDefaults.blurMessageSendAnimation
-//                state.selectedInterfaceStyle = userDefaults.selectedInterfaceStyle
+                state.selectedInterfaceStyle = userDefaults.selectedInterfaceStyle
                 return .none
                 
             }
