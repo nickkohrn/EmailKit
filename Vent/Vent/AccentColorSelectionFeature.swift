@@ -28,13 +28,13 @@ struct AccentColorSelectionFeature: ReducerProtocol {
                 return .none
 
             case .onAppear:
-                state.selectedColor = userDefaults.accentColor
+                state.selectedColor = userDefaults.selectedAccentColor
                 return .none
 
             case .selectedColor(let color):
                 state.selectedColor = color
                 return .run { send in
-                    await userDefaults.setAccentColor(color)
+                    await userDefaults.setSelectedAccentColor(color)
                     await send(.delegate(.selectedAccentColor))
                 }
 

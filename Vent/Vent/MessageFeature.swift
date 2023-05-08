@@ -56,14 +56,14 @@ struct MessageFeature: ReducerProtocol {
                 return .none
                 
             case .onAppear:
-                state.accentColor = userDefaults.accentColor
+                state.accentColor = userDefaults.selectedAccentColor
                 return .none
 
             case .route(.settings(.delegate(.dismiss))):
                 return EffectTask(value: .dismissRoute)
 
             case .route(.settings(.delegate(.selectedAccentColor))):
-                state.accentColor = userDefaults.accentColor
+                state.accentColor = userDefaults.selectedAccentColor
                 return .none
                 
             case .route:

@@ -22,13 +22,13 @@ public struct UserDefaultsClient {
     public var setString: @Sendable (_ string: String, _ key: String) async -> Void
     public var stringForKey: @Sendable (String) -> String?
 
-    public var accentColor: AccentColorSelection {
+    public var selectedAccentColor: AccentColorSelection {
         guard let rawValue = stringForKey(Self.selectedAccentColorKey) else { return .blue }
         guard let color = AccentColorSelection(rawValue: rawValue) else { return .blue }
         return color
     }
 
-    public func setAccentColor(_ color: AccentColorSelection) async {
+    public func setSelectedAccentColor(_ color: AccentColorSelection) async {
         await setString(color.rawValue, Self.selectedAccentColorKey)
     }
 }

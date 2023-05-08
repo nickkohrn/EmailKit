@@ -37,7 +37,7 @@ struct SettingsFeature: ReducerProtocol {
                 return .none
 
             case .accentColorSelection(.delegate(.selectedAccentColor)):
-                state.selectedAccentColor = userDefaults.accentColor
+                state.selectedAccentColor = userDefaults.selectedAccentColor
                 return EffectTask(value: .delegate(.selectedAccentColor))
 
             case .accentColorSelection:
@@ -50,7 +50,7 @@ struct SettingsFeature: ReducerProtocol {
                 return EffectTask(value: .delegate(.dismiss))
 
             case .onAppear:
-                state.selectedAccentColor = userDefaults.accentColor
+                state.selectedAccentColor = userDefaults.selectedAccentColor
                 return .none
 
             }
