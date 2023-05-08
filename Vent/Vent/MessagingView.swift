@@ -11,6 +11,7 @@ struct MessagingView: View {
                 Group {
                     switch viewStore.selectedInterfaceStyle {
                     case .message: messageLayout(viewStore: viewStore)
+                    case .poof: poofLayout(viewStore: viewStore)
                     case .vanish: vanishLayout(viewStore: viewStore)
                     }
                 }
@@ -204,6 +205,75 @@ struct MessagingView: View {
                         .asymmetric(
                             insertion: .identity,
                             removal: .movingParts.vanish(viewStore.accentColor.color)
+                        )
+                    )
+                    .zIndex(1)
+                }
+            }
+        }
+        .padding()
+    }
+
+    @ViewBuilder
+    private func poofLayout(
+        viewStore: ViewStoreOf<MessagingFeature>
+    ) -> some View {
+        VStack {
+            Spacer()
+            ZStack {
+                HStack(alignment: .bottom) {
+                    TextField(
+                        "Write something...",
+                        text: viewStore.binding(\.$input),
+                        prompt: Text("Write something..."),
+                        axis: .vertical
+                    )
+                    .padding()
+                    .background(
+                        RoundedRectangle(cornerRadius: 8)
+                            .fill(.clear)
+                    )
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.secondary, lineWidth: 0.5)
+                    )
+                    Button {
+                        viewStore.send(.sendInput)
+                    } label: {
+                        sendButtonImage()
+                    }
+                    .frame(minWidth: 44, minHeight: 44)
+                    .tint(viewStore.accentColor.color)
+                    .disabled(viewStore.isSendButtonDisabled)
+                }
+                if viewStore.isAnimatingInput {
+                    HStack(alignment: .bottom) {
+                        TextField(
+                            "Write something...",
+                            text: .constant(viewStore.inputToAnimate),
+                            prompt: nil,
+                            axis: .vertical
+                        )
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(
+                            RoundedRectangle(cornerRadius: 8)
+                                .fill(viewStore.accentColor.color)
+                        )
+                        Button {
+
+                        } label: {
+                            sendButtonImage()
+                        }
+                        .frame(minWidth: 44, minHeight: 44)
+                        .disabled(true)
+                        .opacity(0)
+                        .padding(.bottom)
+                    }
+                    .transition(
+                        .asymmetric(
+                            insertion: .identity,
+                            removal: .movingParts.poof
                         )
                     )
                     .zIndex(1)
