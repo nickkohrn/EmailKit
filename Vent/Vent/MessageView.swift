@@ -2,7 +2,7 @@ import ComposableArchitecture
 import Pow
 import SwiftUI
 
-struct ContentView: View {
+struct MessageView: View {
     let store: StoreOf<MessageFeature>
     
     var body: some View {
@@ -33,9 +33,8 @@ struct ContentView: View {
                                 sendButtonImage()
                             }
                             .frame(minWidth: 44, minHeight: 44)
+                            .tint(viewStore.accentColor.color)
                             .disabled(viewStore.isSendButtonDisabled)
-                            .buttonStyle(PushDownButtonStyle())
-                            .symbolRenderingMode(.multicolor)
                         }
                     }
                     if viewStore.isAnimatingInput {
@@ -52,7 +51,7 @@ struct ContentView: View {
                                 .padding()
                                 .background(
                                     RoundedRectangle(cornerRadius: 8)
-                                        .fill(Color.accentColor)
+                                        .fill(viewStore.accentColor.color)
                                 )
                                 Button {
 
@@ -80,6 +79,38 @@ struct ContentView: View {
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbarBackground(.visible, for: .navigationBar)
                 .onAppear { viewStore.send(.onAppear) }
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button {
+                            viewStore.send(.settingsButtonActivated)
+                        } label: {
+                            Label("Settings", systemImage: "gearshape")
+                        }
+                    }
+                }
+                .sheet(
+                    isPresented: viewStore.binding(
+                        get: \.showRoute,
+                        send: MessageFeature.Action.dismissRoute
+                    ),
+                    content: {
+                        IfLetStore(
+                            store.scope(
+                                state: \.route,
+                                action: MessageFeature.Action.route
+                            )
+                        ) { routeStore in
+                            SwitchStore(routeStore) {
+                                CaseLet(
+                                    state: /MessageFeature.State.Route.settings,
+                                    action: MessageFeature.Action.Route.settings
+                                ) { store in
+                                    SettingsView(store: store)
+                                }
+                            }
+                        }
+                    }
+                )
             }
         }
     }
@@ -95,13 +126,13 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            ContentView(store: .init(
+            MessageView(store: .init(
                 initialState: .init(),
                 reducer: MessageFeature()
             ))
             .previewDisplayName("Empty")
             
-            ContentView(store: .init(
+            MessageView(store: .init(
                 initialState: .init(input: "This is a message."),
                 reducer: MessageFeature()
             ))
