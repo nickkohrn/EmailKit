@@ -14,25 +14,11 @@ struct SettingsView: View {
                         Label("Privacy", systemImage: "lock.shield.fill")
                     }
                     Section {
-                        Picker("Interface Style", selection: viewStore.binding(\.$selectedInterfaceStyle)) {
-                            ForEach(viewStore.supportedInterfaceStyles) { style in
-                                Text(style.title)
-                                    .tag(style)
-                            }
-                        }
-                        Text(viewStore.selectedInterfaceStyle.explanation)
+                        Toggle("Blur Animation", isOn: viewStore.binding(\.$enableMessageSendBlur))
+                            .tint(viewStore.selectedAccentColor.color)
+                        Text("This controls whether a blur animation occurs when the message interface style is used.")
                             .font(.footnote)
                             .foregroundColor(.secondary)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                    }
-                    Section {
-                        if viewStore.selectedInterfaceStyle == .message {
-                            Toggle("Blur Animation", isOn: viewStore.binding(\.$enableMessageSendBlur))
-                                .tint(viewStore.selectedAccentColor.color)
-                            Text("This controls whether a blur animation occurs when the message interface style is used.")
-                                .font(.footnote)
-                                .foregroundColor(.secondary)
-                        }
                     }
                     Section {
                         Toggle("Haptic Feedback", isOn: viewStore.binding(\.$enableHapticFeedback))
@@ -65,7 +51,6 @@ struct SettingsView: View {
                         }
                     }
                 }
-                .animation(.default, value: viewStore.selectedInterfaceStyle)
                 .navigationTitle("Settings")
                 .navigationBarTitleDisplayMode(.inline)
                 .onAppear { viewStore.send(.onAppear) }
