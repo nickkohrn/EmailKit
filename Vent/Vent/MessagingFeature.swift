@@ -11,11 +11,11 @@ struct MessagingFeature: ReducerProtocol {
         @BindingState var input = ""
         var inputToAnimate = ""
         var isAnimatingInput = false
-        var accentColor: AccentColorSelection = .blue
+        var selectedAccentColor: AccentColorSelection = .blue
         var route: Route?
         var showRoute = false
         var blurMessageSendAnimation = false
-        var selectedInterfaceStyle = InterfaceStyleSelection.message
+        var enableHapticFeedback = false
         
         var isSendButtonDisabled: Bool {
             input.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
@@ -68,10 +68,6 @@ struct MessagingFeature: ReducerProtocol {
                     EffectTask(value: .updateUserSettings),
                     EffectTask(value: .dismissRoute)
                 )
-
-            case .route(.settings(.delegate(.selectedInterfaceStyle))):
-                state.selectedInterfaceStyle = userDefaults.selectedInterfaceStyle
-                return .none
                 
             case .route:
                 return .none
@@ -95,9 +91,9 @@ struct MessagingFeature: ReducerProtocol {
                 }
 
             case .updateUserSettings:
-                state.accentColor = userDefaults.selectedAccentColor
+                state.selectedAccentColor = userDefaults.selectedAccentColor
                 state.blurMessageSendAnimation = userDefaults.blurMessageSendAnimation
-                state.selectedInterfaceStyle = userDefaults.selectedInterfaceStyle
+                state.enableHapticFeedback = userDefaults.enableHapticFeedback
                 return .none
                 
             }

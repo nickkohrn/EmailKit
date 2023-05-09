@@ -8,12 +8,11 @@ struct MessagingView: View {
     var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
             NavigationStack {
-                Group {
-                    switch viewStore.selectedInterfaceStyle {
-                    case .message: messageLayout(viewStore: viewStore)
-                    case .vanish: vanishLayout(viewStore: viewStore)
-                    }
-                }
+                messageLayout(viewStore: viewStore)
+                .changeEffect(
+                    .feedback(hapticNotification: .success),
+                    value: viewStore.isAnimatingInput && viewStore.enableHapticFeedback
+                ) // Initiate haptics if animating and haptics enabled
                 .navigationTitle("Let It Go")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbarBackground(.visible, for: .navigationBar)
@@ -23,7 +22,7 @@ struct MessagingView: View {
                         Button {
                             viewStore.send(.settingsButtonActivated)
                         } label: {
-                            Label("Settings", systemImage: "gearshape")
+                            Label("Settings", systemImage: "gearshape.circle")
                         }
                     }
                 }
@@ -51,6 +50,7 @@ struct MessagingView: View {
                     }
                 )
             }
+            .accentColor(viewStore.selectedAccentColor.color)
         }
     }
 
@@ -100,7 +100,7 @@ struct MessagingView: View {
                         sendButtonImage()
                     }
                     .frame(minWidth: 44, minHeight: 44)
-                    .tint(viewStore.accentColor.color)
+                    .tint(viewStore.selectedAccentColor.color)
                     .disabled(viewStore.isSendButtonDisabled)
                 }
             }
@@ -118,7 +118,7 @@ struct MessagingView: View {
                         .padding()
                         .background(
                             RoundedRectangle(cornerRadius: 8)
-                                .fill(viewStore.accentColor.color)
+                                .fill(viewStore.selectedAccentColor.color)
                         )
                         Button {
 
@@ -142,75 +142,6 @@ struct MessagingView: View {
         }
         .padding()
         .edgesIgnoringSafeArea(.top)
-    }
-
-    @ViewBuilder
-    private func vanishLayout(
-        viewStore: ViewStoreOf<MessagingFeature>
-    ) -> some View {
-        VStack {
-            Spacer()
-            ZStack {
-                HStack(alignment: .bottom) {
-                    TextField(
-                        "Write something...",
-                        text: viewStore.binding(\.$input),
-                        prompt: Text("Write something..."),
-                        axis: .vertical
-                    )
-                    .padding()
-                    .background(
-                        RoundedRectangle(cornerRadius: 8)
-                            .fill(.clear)
-                    )
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color.secondary, lineWidth: 0.5)
-                    )
-                    Button {
-                        viewStore.send(.sendInput)
-                    } label: {
-                        sendButtonImage()
-                    }
-                    .frame(minWidth: 44, minHeight: 44)
-                    .tint(viewStore.accentColor.color)
-                    .disabled(viewStore.isSendButtonDisabled)
-                }
-                if viewStore.isAnimatingInput {
-                    HStack(alignment: .bottom) {
-                        TextField(
-                            "Write something...",
-                            text: .constant(viewStore.inputToAnimate),
-                            prompt: nil,
-                            axis: .vertical
-                        )
-                        .foregroundColor(.white)
-                        .padding()
-                        .background(
-                            RoundedRectangle(cornerRadius: 8)
-                                .fill(viewStore.accentColor.color)
-                        )
-                        Button {
-
-                        } label: {
-                            sendButtonImage()
-                        }
-                        .frame(minWidth: 44, minHeight: 44)
-                        .disabled(true)
-                        .opacity(0)
-                        .padding(.bottom)
-                    }
-                    .transition(
-                        .asymmetric(
-                            insertion: .identity,
-                            removal: .movingParts.vanish(viewStore.accentColor.color)
-                        )
-                    )
-                    .zIndex(1)
-                }
-            }
-        }
-        .padding()
     }
 }
 

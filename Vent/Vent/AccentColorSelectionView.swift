@@ -11,7 +11,7 @@ struct AccentColorSelectionView: View {
                     Section {
                         ForEach(viewStore.colors) { color in
                             Button {
-                                viewStore.send(.selectedColor(color))
+                                viewStore.send(.selectedAccentColor(color))
                             } label: {
                                 HStack {
                                     Label {
@@ -23,9 +23,9 @@ struct AccentColorSelectionView: View {
                                             .foregroundColor(color.color)
                                     }
                                     Spacer()
-                                    if viewStore.selectedColor == color {
+                                    if viewStore.selectedAccentColor == color {
                                         Image(systemName: "checkmark.circle.fill")
-                                            .foregroundColor(viewStore.selectedColor.color)
+                                            .foregroundColor(viewStore.selectedAccentColor.color)
                                     }
                                 }
                             }
@@ -37,6 +37,7 @@ struct AccentColorSelectionView: View {
                 .navigationBarTitleDisplayMode(.inline)
                 .onAppear { viewStore.send(.onAppear) }
             }
+            .accentColor(viewStore.selectedAccentColor.color)
         }
     }
 }
