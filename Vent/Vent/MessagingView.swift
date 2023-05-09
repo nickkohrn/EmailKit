@@ -22,7 +22,7 @@ struct MessagingView: View {
                         Button {
                             viewStore.send(.settingsButtonActivated)
                         } label: {
-                            Label("Settings", systemImage: "gearshape")
+                            Label("Settings", systemImage: "gearshape.circle")
                         }
                     }
                 }
