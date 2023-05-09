@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F920CE0B2A0AF2B600FC5395 /* PurchasesKit in Frameworks */ = {isa = PBXBuildFile; productRef = F920CE0A2A0AF2B600FC5395 /* PurchasesKit */; };
 		F960132F2A09CFB700873006 /* LetItGoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F960132E2A09CFB700873006 /* LetItGoApp.swift */; };
 		F96013332A09CFB800873006 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F96013322A09CFB800873006 /* Assets.xcassets */; };
 		F96013362A09CFB800873006 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F96013352A09CFB800873006 /* Preview Assets.xcassets */; };
@@ -49,6 +50,7 @@
 			files = (
 				F96013412A09CFFE00873006 /* ComposableArchitecture in Frameworks */,
 				F960133E2A09CFEA00873006 /* Pow in Frameworks */,
+				F920CE0B2A0AF2B600FC5395 /* PurchasesKit in Frameworks */,
 				F9D9CA0F2A09D9FF00346A32 /* RevenueCat in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -121,6 +123,7 @@
 				F960133D2A09CFEA00873006 /* Pow */,
 				F96013402A09CFFE00873006 /* ComposableArchitecture */,
 				F9D9CA0E2A09D9FF00346A32 /* RevenueCat */,
+				F920CE0A2A0AF2B600FC5395 /* PurchasesKit */,
 			);
 			productName = LetItGo;
 			productReference = F960132B2A09CFB700873006 /* LetItGo.app */;
@@ -154,6 +157,7 @@
 				F960133C2A09CFEA00873006 /* XCRemoteSwiftPackageReference "Pow" */,
 				F960133F2A09CFFE00873006 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 				F9D9CA0D2A09D9FF00346A32 /* XCRemoteSwiftPackageReference "purchases-ios" */,
+				F920CE092A0AF2B600FC5395 /* XCRemoteSwiftPackageReference "PurchasesKit" */,
 			);
 			productRefGroup = F960132C2A09CFB700873006 /* Products */;
 			projectDirPath = "";
@@ -393,6 +397,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		F920CE092A0AF2B600FC5395 /* XCRemoteSwiftPackageReference "PurchasesKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/nickkohrn/PurchasesKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.1;
+			};
+		};
 		F960133C2A09CFEA00873006 /* XCRemoteSwiftPackageReference "Pow" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/movingparts-io/Pow";
@@ -420,6 +432,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		F920CE0A2A0AF2B600FC5395 /* PurchasesKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F920CE092A0AF2B600FC5395 /* XCRemoteSwiftPackageReference "PurchasesKit" */;
+			productName = PurchasesKit;
+		};
 		F960133D2A09CFEA00873006 /* Pow */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = F960133C2A09CFEA00873006 /* XCRemoteSwiftPackageReference "Pow" */;

@@ -1,5 +1,6 @@
 import ComposableArchitecture
 import Foundation
+import PurchasesKit
 import SwiftUI
 
 struct MessagingFeature: ReducerProtocol {
@@ -37,7 +38,8 @@ struct MessagingFeature: ReducerProtocol {
         case startAnimation
         case updateUserSettings
     }
-    
+
+    @Dependency(\.purchasesClient) var purchasesClient
     @Dependency(\.userDefaults) var userDefaults
     
     var body: some ReducerProtocol<State, Action> {

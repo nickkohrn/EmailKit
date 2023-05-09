@@ -28,6 +28,15 @@
       }
     },
     {
+      "identity" : "purchaseskit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/nickkohrn/PurchasesKit.git",
+      "state" : {
+        "revision" : "6becc8ad83c70af8edf107b2c223be28e2a4e950",
+        "version" : "0.2.0"
+      }
+    },
+    {
       "identity" : "swift-case-paths",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pointfreeco/swift-case-paths",
