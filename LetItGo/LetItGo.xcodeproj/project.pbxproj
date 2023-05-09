@@ -37,6 +37,8 @@
 		F96013602A09D0CC00873006 /* Defaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 		F96013622A09D0D400873006 /* SettingsFeature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsFeature.swift; sourceTree = "<group>"; };
 		F96013642A09D0DA00873006 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		F9D9CA0B2A09D80700346A32 /* Configuration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Configuration.storekit; sourceTree = "<group>"; };
+		F9D9CA0C2A09D86E00346A32 /* StoreKitTestCertificate.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = StoreKitTestCertificate.cer; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +57,8 @@
 		F96013222A09CFB700873006 = {
 			isa = PBXGroup;
 			children = (
+				F9D9CA0B2A09D80700346A32 /* Configuration.storekit */,
+				F9D9CA0C2A09D86E00346A32 /* StoreKitTestCertificate.cer */,
 				F960132D2A09CFB700873006 /* LetItGo */,
 				F960132C2A09CFB700873006 /* Products */,
 			);
