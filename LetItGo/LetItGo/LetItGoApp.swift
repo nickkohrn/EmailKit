@@ -2,7 +2,7 @@ import ComposableArchitecture
 import SwiftUI
 
 @main
-struct VentApp: App {
+struct LetItGoApp: App {
     var body: some Scene {
         WindowGroup {
             MessagingView(store: .init(
