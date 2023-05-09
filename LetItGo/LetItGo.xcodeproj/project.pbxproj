@@ -21,6 +21,7 @@
 		F96013612A09D0CC00873006 /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96013602A09D0CC00873006 /* Defaults.swift */; };
 		F96013632A09D0D400873006 /* SettingsFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96013622A09D0D400873006 /* SettingsFeature.swift */; };
 		F96013652A09D0DA00873006 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96013642A09D0DA00873006 /* SettingsView.swift */; };
+		F9D9CA0F2A09D9FF00346A32 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = F9D9CA0E2A09D9FF00346A32 /* RevenueCat */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 			files = (
 				F96013412A09CFFE00873006 /* ComposableArchitecture in Frameworks */,
 				F960133E2A09CFEA00873006 /* Pow in Frameworks */,
+				F9D9CA0F2A09D9FF00346A32 /* RevenueCat in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -118,6 +120,7 @@
 			packageProductDependencies = (
 				F960133D2A09CFEA00873006 /* Pow */,
 				F96013402A09CFFE00873006 /* ComposableArchitecture */,
+				F9D9CA0E2A09D9FF00346A32 /* RevenueCat */,
 			);
 			productName = LetItGo;
 			productReference = F960132B2A09CFB700873006 /* LetItGo.app */;
@@ -150,6 +153,7 @@
 			packageReferences = (
 				F960133C2A09CFEA00873006 /* XCRemoteSwiftPackageReference "Pow" */,
 				F960133F2A09CFFE00873006 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+				F9D9CA0D2A09D9FF00346A32 /* XCRemoteSwiftPackageReference "purchases-ios" */,
 			);
 			productRefGroup = F960132C2A09CFB700873006 /* Products */;
 			projectDirPath = "";
@@ -405,6 +409,14 @@
 				minimumVersion = 0.52.0;
 			};
 		};
+		F9D9CA0D2A09D9FF00346A32 /* XCRemoteSwiftPackageReference "purchases-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RevenueCat/purchases-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -417,6 +429,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F960133F2A09CFFE00873006 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = ComposableArchitecture;
+		};
+		F9D9CA0E2A09D9FF00346A32 /* RevenueCat */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F9D9CA0D2A09D9FF00346A32 /* XCRemoteSwiftPackageReference "purchases-ios" */;
+			productName = RevenueCat;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
