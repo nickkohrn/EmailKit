@@ -19,8 +19,6 @@ struct SettingsView: View {
                         }
                     }
                     Section {
-                        Toggle("Haptic Feedback", isOn: viewStore.binding(\.$enableHapticFeedback))
-                            .tint(viewStore.selectedAccentColor.color)
                         NavigationLink(
                             destination: IfLetStore(store.scope(
                                 state: \.accentColorSelection,
@@ -51,6 +49,17 @@ struct SettingsView: View {
                         } icon: {
                             Image(systemName: "sparkles")
                                 .foregroundColor(.orange)
+                        }
+                    }
+                    Section {
+                        Toggle("Haptic Feedback", isOn: viewStore.binding(\.$enableHapticFeedback))
+                            .tint(viewStore.selectedAccentColor.color)
+                    } header: {
+                        Label {
+                            Text("Feel")
+                        } icon: {
+                            Image(systemName: "hand.point.up.left.fill")
+                                .foregroundColor(.teal)
                         }
                     }
                     if viewStore.canMakePayments {
