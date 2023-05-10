@@ -1,3 +1,4 @@
+import AppInfoKit
 import ComposableArchitecture
 import SwiftUI
 
@@ -46,12 +47,12 @@ struct SettingsView: View {
                         Button {
                             viewStore.send(.submitReviewButtonActivated)
                         } label: {
-                            LabeledContent {
-                                Image(systemName: "arrow.up.forward")
-                                    .imageScale(.small)
-                            } label: {
-                                Text("Submit a Review")
-                            }
+                            Label("Submit a Review", systemImage: "star")
+                        }
+                        Button {
+                            viewStore.send(.sendEmailButtonActivated)
+                        } label: {
+                            Label("Send an Email", systemImage: "envelope")
                         }
                     }
                     if viewStore.canMakePayments {
@@ -94,6 +95,20 @@ struct SettingsView: View {
                                 .symbolRenderingMode(.multicolor)
                         }
                     }
+                    if let displayName = viewStore.appInfo.displayName,
+                       let version = viewStore.appInfo.versionString,
+                       let build = viewStore.appInfo.buildString {
+                        Section {
+                            VStack(alignment: .leading) {
+                                Text(displayName)
+                                Text("\(version) (\(build))")
+                                Text("Made by Nick Kohrn")
+                            }
+                            .font(.footnote)
+                            .foregroundColor(.secondary)
+                        }
+                        .listRowBackground(Color(.systemGroupedBackground))
+                    }
                 }
                 .interactiveDismissDisabled(viewStore.isMakingPurchase)
                 .navigationTitle("Settings")
@@ -116,17 +131,27 @@ struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
         SettingsView(store: .init(
             initialState: .init(),
-            reducer: SettingsFeature().transformDependency(\.purchasesClient) {
-                $0.canMakePayments = { true }
-                $0.products = { _ in
-                    [.init(
-                        localizedDescription: "A cup-of-coffee-sized tip",
-                        localizedPriceString: "$0.99",
-                        localizedTitle: "Small Tip",
-                        productIdentifier: ""
-                    )]
+            reducer: SettingsFeature()
+                .transformDependency(\.purchasesClient) {
+                    $0.canMakePayments = { true }
+                    $0.products = { _ in
+                        [.init(
+                            localizedDescription: "A cup-of-coffee-sized tip",
+                            localizedPriceString: "$0.99",
+                            localizedTitle: "Small Tip",
+                            productIdentifier: ""
+                        )]
+                    }
                 }
-            }
+                .transformDependency(\.appInfoClient) {
+                    $0.info = { _ in
+                            .init(
+                                buildString: "1",
+                                displayName: "Let It Go",
+                                versionString: "0.1.0"
+                            )
+                    }
+                }
         ))
     }
 }

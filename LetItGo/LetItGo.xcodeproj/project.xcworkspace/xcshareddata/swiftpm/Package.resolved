@@ -1,6 +1,15 @@
 {
   "pins" : [
     {
+      "identity" : "appinfokit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/nickkohrn/AppInfoKit.git",
+      "state" : {
+        "revision" : "c14e69171cb485b45260f4022275131cf277dc17",
+        "version" : "0.1.0"
+      }
+    },
+    {
       "identity" : "combine-schedulers",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pointfreeco/combine-schedulers",

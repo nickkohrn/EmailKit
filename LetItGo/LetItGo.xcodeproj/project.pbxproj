@@ -26,6 +26,7 @@
 		F96013652A09D0DA00873006 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96013642A09D0DA00873006 /* SettingsView.swift */; };
 		F9D9CA0F2A09D9FF00346A32 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = F9D9CA0E2A09D9FF00346A32 /* RevenueCat */; };
 		F9E76F6F2A0C0AD1001E64C2 /* EmailKit in Frameworks */ = {isa = PBXBuildFile; productRef = F9E76F6E2A0C0AD1001E64C2 /* EmailKit */; };
+		F9F5FD702A0C130F00CF52AA /* AppInfoKit in Frameworks */ = {isa = PBXBuildFile; productRef = F9F5FD6F2A0C130F00CF52AA /* AppInfoKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +57,7 @@
 				F96013412A09CFFE00873006 /* ComposableArchitecture in Frameworks */,
 				F960133E2A09CFEA00873006 /* Pow in Frameworks */,
 				F920CE0B2A0AF2B600FC5395 /* PurchasesKit in Frameworks */,
+				F9F5FD702A0C130F00CF52AA /* AppInfoKit in Frameworks */,
 				F9D9CA0F2A09D9FF00346A32 /* RevenueCat in Frameworks */,
 				F9E76F6F2A0C0AD1001E64C2 /* EmailKit in Frameworks */,
 			);
@@ -133,6 +135,7 @@
 				F9D9CA0E2A09D9FF00346A32 /* RevenueCat */,
 				F920CE0A2A0AF2B600FC5395 /* PurchasesKit */,
 				F9E76F6E2A0C0AD1001E64C2 /* EmailKit */,
+				F9F5FD6F2A0C130F00CF52AA /* AppInfoKit */,
 			);
 			productName = LetItGo;
 			productReference = F960132B2A09CFB700873006 /* LetItGo.app */;
@@ -168,6 +171,7 @@
 				F9D9CA0D2A09D9FF00346A32 /* XCRemoteSwiftPackageReference "purchases-ios" */,
 				F920CE092A0AF2B600FC5395 /* XCRemoteSwiftPackageReference "PurchasesKit" */,
 				F9E76F6D2A0C0AD1001E64C2 /* XCRemoteSwiftPackageReference "EmailKit" */,
+				F9F5FD6E2A0C130F00CF52AA /* XCRemoteSwiftPackageReference "AppInfoKit" */,
 			);
 			productRefGroup = F960132C2A09CFB700873006 /* Products */;
 			projectDirPath = "";
@@ -338,6 +342,7 @@
 				DEVELOPMENT_TEAM = K6D967URM5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Let It Go";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -367,6 +372,7 @@
 				DEVELOPMENT_TEAM = K6D967URM5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Let It Go";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -449,6 +455,14 @@
 				minimumVersion = 0.2.0;
 			};
 		};
+		F9F5FD6E2A0C130F00CF52AA /* XCRemoteSwiftPackageReference "AppInfoKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/nickkohrn/AppInfoKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -476,6 +490,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F9E76F6D2A0C0AD1001E64C2 /* XCRemoteSwiftPackageReference "EmailKit" */;
 			productName = EmailKit;
+		};
+		F9F5FD6F2A0C130F00CF52AA /* AppInfoKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F9F5FD6E2A0C130F00CF52AA /* XCRemoteSwiftPackageReference "AppInfoKit" */;
+			productName = AppInfoKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

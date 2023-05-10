@@ -1,4 +1,6 @@
+import AppInfoKit
 import ComposableArchitecture
+import EmailKit
 import Foundation
 import PurchasesKit
 import RevenueCat
@@ -17,6 +19,7 @@ struct SettingsFeature: ReducerProtocol {
         var canMakePayments = false
         var tipProducts = [PurchasableProduct]()
         var productPurchaseState = ProductPurchaseState.notPurchasing
+        var appInfo = AppInfo()
 
         var isMakingPurchase: Bool {
             if case .purchasing = productPurchaseState {
@@ -39,14 +42,18 @@ struct SettingsFeature: ReducerProtocol {
         case dismissButtonActivated
         case onAppear
         case purchasableProductTapped(PurchasableProduct)
+        case receivedAppInfoResponse(AppInfo)
         case receivedCanMakePaymentsResponse(TaskResult<Bool>)
         case receivedPurchaseCancelledByUserResponse
         case receivedPurchaseFailedResponse
         case receivedPurchaseSuccessResponse
         case receivedTipProducts(TaskResult<[PurchasableProduct]>)
+        case sendEmailButtonActivated
         case submitReviewButtonActivated
     }
 
+    @Dependency(\.appInfoClient) var appInfoClient
+    @Dependency(\.emailClient) var emailClient
     @Dependency(\.purchasesClient) var purchasesClient
     @Dependency(\.openURL) var openURL
     @Dependency(\.userDefaults) var userDefaults
@@ -89,13 +96,19 @@ struct SettingsFeature: ReducerProtocol {
             case .onAppear:
                 state.selectedAccentColor = userDefaults.selectedAccentColor
                 state.enableHapticFeedback = userDefaults.enableHapticFeedback
-                return .task(priority: .high) {
-                    await .receivedCanMakePaymentsResponse(
-                        TaskResult {
-                            await purchasesClient.canMakePayments()
-                        }
-                    )
-                }
+                return .merge(
+                    .task(priority: .high) {
+                        await .receivedCanMakePaymentsResponse(
+                            TaskResult {
+                                await purchasesClient.canMakePayments()
+                            }
+                        )
+                    },
+                    .run(priority: .high) { send in
+                        let info = await appInfoClient.info(Bundle.main)
+                        await send(.receivedAppInfoResponse(info))
+                    }
+                )
 
             case .purchasableProductTapped(let product):
                 guard let storeProduct = product.storeProduct else {
@@ -113,6 +126,10 @@ struct SettingsFeature: ReducerProtocol {
                 } catch: { error, send in
                     await send(.receivedPurchaseFailedResponse)
                 }
+
+            case .receivedAppInfoResponse(let info):
+                state.appInfo = info
+                return .none
 
             case .receivedCanMakePaymentsResponse(.failure(let error)):
                 print("Can make payments: \(error.localizedDescription)")
@@ -152,6 +169,33 @@ struct SettingsFeature: ReducerProtocol {
                 print("Tip products: \(tipProducts)")
                 state.tipProducts = tipProducts
                 return .none
+
+            case .sendEmailButtonActivated:
+                guard let displayName = state.appInfo.displayName else {
+                    assertionFailure("Expected app display name")
+                    return .none
+                }
+                guard let version = state.appInfo.versionString else {
+                    assertionFailure("Expected app version number string")
+                    return .none
+                }
+                guard let build = state.appInfo.buildString else {
+                    assertionFailure("Expected app build number string")
+                    return .none
+                }
+                let configuration = EmailConfiguration(
+                    toAddress: "hello@astrobits.co",
+                    subject: "\(displayName) Feedback",
+                    body: """
+
+
+                    –––––––––––––––––––
+                    App: \(displayName)
+                    Version: \(version)
+                    Build: \(build)
+                    """
+                )
+                return .fireAndForget { await emailClient.openEmail(configuration) }
 
             case .submitReviewButtonActivated:
                 guard let url = URL(string: "https://apps.apple.com/us/app/let-it-go/id6448896506") else {
