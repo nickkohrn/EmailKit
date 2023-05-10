@@ -82,10 +82,10 @@ struct SettingsView: View {
                                             Text(tip.localizedPriceString)
                                         }
                                     }
+                                    .tint(viewStore.selectedAccentColor.color)
                                     .buttonStyle(.bordered)
                                     .clipShape(Capsule(style: .continuous))
                                     .disabled(viewStore.isMakingPurchase)
-
                                 }
                             }
                         } header: {
