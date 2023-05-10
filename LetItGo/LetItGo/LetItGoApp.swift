@@ -2,12 +2,12 @@ import ComposableArchitecture
 import SwiftUI
 
 @main
-struct VentApp: App {
+struct LetItGoApp: App {
     var body: some Scene {
         WindowGroup {
-            MessagingView(store: .init(
+            MainView(store: .init(
                 initialState: .init(),
-                reducer: MessagingFeature()
+                reducer: MainFeature()
             ))
         }
     }

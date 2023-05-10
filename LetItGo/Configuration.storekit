@@ -1,0 +1,35 @@
+{
+  "identifier" : "B45324B5",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "0.99",
+      "familyShareable" : false,
+      "internalID" : "6448931256",
+      "localizations" : [
+        {
+          "description" : "A cup-of-coffee-sized tip",
+          "displayName" : "Small Tip",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.nickkohrn.LetItGo.SmallTip",
+      "referenceName" : "Small Tip",
+      "type" : "Consumable"
+    }
+  ],
+  "settings" : {
+    "_applicationInternalID" : "6448896506",
+    "_developerTeamID" : "K6D967URM5",
+    "_lastSynchronizedDate" : 705288202.49828696
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "version" : {
+    "major" : 2,
+    "minor" : 0
+  }
+}

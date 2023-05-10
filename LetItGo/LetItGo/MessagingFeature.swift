@@ -1,5 +1,6 @@
 import ComposableArchitecture
 import Foundation
+import PurchasesKit
 import SwiftUI
 
 struct MessagingFeature: ReducerProtocol {
@@ -37,7 +38,8 @@ struct MessagingFeature: ReducerProtocol {
         case startAnimation
         case updateUserSettings
     }
-    
+
+    @Dependency(\.purchasesClient) var purchasesClient
     @Dependency(\.userDefaults) var userDefaults
     
     var body: some ReducerProtocol<State, Action> {
@@ -92,7 +94,6 @@ struct MessagingFeature: ReducerProtocol {
 
             case .updateUserSettings:
                 state.selectedAccentColor = userDefaults.selectedAccentColor
-                state.blurMessageSendAnimation = userDefaults.blurMessageSendAnimation
                 state.enableHapticFeedback = userDefaults.enableHapticFeedback
                 return .none
                 
