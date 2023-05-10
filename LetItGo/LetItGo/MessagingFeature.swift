@@ -94,7 +94,6 @@ struct MessagingFeature: ReducerProtocol {
 
             case .updateUserSettings:
                 state.selectedAccentColor = userDefaults.selectedAccentColor
-                state.blurMessageSendAnimation = userDefaults.blurMessageSendAnimation
                 state.enableHapticFeedback = userDefaults.enableHapticFeedback
                 return .none
                 

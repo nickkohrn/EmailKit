@@ -4,7 +4,6 @@ import Foundation
 struct SettingsFeature: ReducerProtocol {
     struct State: Equatable {
         @BindingState var enableHapticFeedback = false
-        @BindingState var enableMessageSendBlur = false
         var accentColorSelection: AccentColorSelectionFeature.State?
         var isAccentColorSelectionActive = false
         var selectedAccentColor: AccentColorSelection = .blue
@@ -47,11 +46,6 @@ struct SettingsFeature: ReducerProtocol {
             case .accentColorSelection:
                 return .none
 
-            case .binding(\.$enableMessageSendBlur):
-                return .fireAndForget { [enabled = state.enableMessageSendBlur] in
-                    await userDefaults.setBlurMessageSendAnimation(enabled)
-                }
-
             case .binding(\.$enableHapticFeedback):
                 return .fireAndForget { [enabled = state.enableHapticFeedback] in
                     await userDefaults.setEnableHapticFeedback(enabled)
@@ -68,7 +62,6 @@ struct SettingsFeature: ReducerProtocol {
 
             case .onAppear:
                 state.selectedAccentColor = userDefaults.selectedAccentColor
-                state.enableMessageSendBlur = userDefaults.blurMessageSendAnimation
                 state.enableHapticFeedback = userDefaults.enableHapticFeedback
                 return .none
 

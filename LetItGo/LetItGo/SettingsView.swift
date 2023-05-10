@@ -13,18 +13,10 @@ struct SettingsView: View {
                     } header: {
                         Label("Privacy", systemImage: "lock.shield.fill")
                     }
-                    Section {
-                        Toggle("Blur Animation", isOn: viewStore.binding(\.$enableMessageSendBlur))
-                            .tint(viewStore.selectedAccentColor.color)
-                        Text("This controls whether a blur animation occurs when the message interface style is used.")
-                            .font(.footnote)
-                            .foregroundColor(.secondary)
                     }
                     Section {
                         Toggle("Haptic Feedback", isOn: viewStore.binding(\.$enableHapticFeedback))
                             .tint(viewStore.selectedAccentColor.color)
-                    }
-                    Section {
                         NavigationLink(
                             destination: IfLetStore(store.scope(
                                 state: \.accentColorSelection,
