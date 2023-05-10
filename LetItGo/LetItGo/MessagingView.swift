@@ -61,16 +61,6 @@ struct MessagingView: View {
             .fontWeight(.semibold)
     }
 
-    private func messageRemovalTransition(
-        viewStore: ViewStoreOf<MessagingFeature>
-    ) -> AnyTransition {
-        if viewStore.blurMessageSendAnimation {
-            return .movingParts.move(edge: .top).combined(with: .movingParts.blur)
-        } else {
-            return .movingParts.move(edge: .top)
-        }
-    }
-
     @ViewBuilder
     private func messageLayout(
         viewStore: ViewStoreOf<MessagingFeature>
@@ -134,7 +124,7 @@ struct MessagingView: View {
                 .transition(
                     .asymmetric(
                         insertion: .identity,
-                        removal: messageRemovalTransition(viewStore: viewStore)
+                        removal: .movingParts.move(edge: .top).combined(with: .movingParts.blur)
                     )
                 )
                 .zIndex(1)
