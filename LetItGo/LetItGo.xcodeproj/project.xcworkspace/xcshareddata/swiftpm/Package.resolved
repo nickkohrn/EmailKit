@@ -10,6 +10,15 @@
       }
     },
     {
+      "identity" : "emailkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/nickkohrn/EmailKit.git",
+      "state" : {
+        "revision" : "745591ef855ee3c112aa00ca08abc3c1ad67721c",
+        "version" : "0.2.0"
+      }
+    },
+    {
       "identity" : "pow",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/movingparts-io/Pow",

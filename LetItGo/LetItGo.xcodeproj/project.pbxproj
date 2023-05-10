@@ -25,6 +25,7 @@
 		F96013632A09D0D400873006 /* SettingsFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96013622A09D0D400873006 /* SettingsFeature.swift */; };
 		F96013652A09D0DA00873006 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96013642A09D0DA00873006 /* SettingsView.swift */; };
 		F9D9CA0F2A09D9FF00346A32 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = F9D9CA0E2A09D9FF00346A32 /* RevenueCat */; };
+		F9E76F6F2A0C0AD1001E64C2 /* EmailKit in Frameworks */ = {isa = PBXBuildFile; productRef = F9E76F6E2A0C0AD1001E64C2 /* EmailKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +57,7 @@
 				F960133E2A09CFEA00873006 /* Pow in Frameworks */,
 				F920CE0B2A0AF2B600FC5395 /* PurchasesKit in Frameworks */,
 				F9D9CA0F2A09D9FF00346A32 /* RevenueCat in Frameworks */,
+				F9E76F6F2A0C0AD1001E64C2 /* EmailKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -130,6 +132,7 @@
 				F96013402A09CFFE00873006 /* ComposableArchitecture */,
 				F9D9CA0E2A09D9FF00346A32 /* RevenueCat */,
 				F920CE0A2A0AF2B600FC5395 /* PurchasesKit */,
+				F9E76F6E2A0C0AD1001E64C2 /* EmailKit */,
 			);
 			productName = LetItGo;
 			productReference = F960132B2A09CFB700873006 /* LetItGo.app */;
@@ -164,6 +167,7 @@
 				F960133F2A09CFFE00873006 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 				F9D9CA0D2A09D9FF00346A32 /* XCRemoteSwiftPackageReference "purchases-ios" */,
 				F920CE092A0AF2B600FC5395 /* XCRemoteSwiftPackageReference "PurchasesKit" */,
+				F9E76F6D2A0C0AD1001E64C2 /* XCRemoteSwiftPackageReference "EmailKit" */,
 			);
 			productRefGroup = F960132C2A09CFB700873006 /* Products */;
 			projectDirPath = "";
@@ -437,6 +441,14 @@
 				minimumVersion = 4.0.0;
 			};
 		};
+		F9E76F6D2A0C0AD1001E64C2 /* XCRemoteSwiftPackageReference "EmailKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/nickkohrn/EmailKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -459,6 +471,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F9D9CA0D2A09D9FF00346A32 /* XCRemoteSwiftPackageReference "purchases-ios" */;
 			productName = RevenueCat;
+		};
+		F9E76F6E2A0C0AD1001E64C2 /* EmailKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F9E76F6D2A0C0AD1001E64C2 /* XCRemoteSwiftPackageReference "EmailKit" */;
+			productName = EmailKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
