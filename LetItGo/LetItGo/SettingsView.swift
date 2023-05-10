@@ -62,6 +62,25 @@ struct SettingsView: View {
                                 .foregroundColor(.teal)
                         }
                     }
+                    Section {
+                        Button {
+
+                        } label: {
+                            LabeledContent {
+                                Image(systemName: "arrow.up.forward")
+                                    .imageScale(.small)
+                            } label: {
+                                Text("Submit a Review")
+                            }
+                        }
+                    } header: {
+                        Label {
+                            Text("Feedback")
+                        } icon: {
+                            Image(systemName: "star.fill")
+                                .foregroundColor(.yellow)
+                        }
+                    }
                     if viewStore.canMakePayments {
                         Section {
                             ForEach(viewStore.tipProducts) { tip in
