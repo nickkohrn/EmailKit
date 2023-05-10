@@ -11,7 +11,7 @@ let package = Package(
             targets: ["EmailKit"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", branch: "main"),
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture.git", .upToNextMajor(from: "0.0.0")),
     ],
     targets: [
         .target(
