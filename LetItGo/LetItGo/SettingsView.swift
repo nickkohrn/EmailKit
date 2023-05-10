@@ -9,16 +9,14 @@ struct SettingsView: View {
             NavigationStack {
                 List {
                     Section {
-                        Text("Your privacy is important. Your data is kept on your device. Everything you type disappears once you tap the send button.")
+                        Text("Your privacy is important. Your data is kept on your device, and everything disappears once you tap the button to simulate sending a message.")
                     } header: {
-                        Label {
-                            Text("Privacy")
-                        } icon: {
-                            Image(systemName: "lock.shield.fill")
-                                .foregroundColor(.purple)
-                        }
+                        Label("Privacy", systemImage: "lock.shield.fill")
                     }
+                    .headerProminence(.increased)
                     Section {
+                        Toggle("Haptic Feedback", isOn: viewStore.binding(\.$enableHapticFeedback))
+                            .tint(viewStore.selectedAccentColor.color)
                         NavigationLink(
                             destination: IfLetStore(store.scope(
                                 state: \.accentColorSelection,
@@ -43,24 +41,6 @@ struct SettingsView: View {
                                 Text("Accent Color")
                             }
                         }
-                    } header: {
-                        Label {
-                            Text("Appearance")
-                        } icon: {
-                            Image(systemName: "sparkles")
-                                .foregroundColor(.orange)
-                        }
-                    }
-                    Section {
-                        Toggle("Haptic Feedback", isOn: viewStore.binding(\.$enableHapticFeedback))
-                            .tint(viewStore.selectedAccentColor.color)
-                    } header: {
-                        Label {
-                            Text("Feel")
-                        } icon: {
-                            Image(systemName: "hand.point.up.left.fill")
-                                .foregroundColor(.teal)
-                        }
                     }
                     Section {
                         Button {
@@ -72,13 +52,6 @@ struct SettingsView: View {
                             } label: {
                                 Text("Submit a Review")
                             }
-                        }
-                    } header: {
-                        Label {
-                            Text("Feedback")
-                        } icon: {
-                            Image(systemName: "star.fill")
-                                .foregroundColor(.yellow)
                         }
                     }
                     if viewStore.canMakePayments {
@@ -117,12 +90,8 @@ struct SettingsView: View {
                                 }
                             }
                         } header: {
-                            Label {
-                                Text("Leave a Tip")
-                            } icon: {
-                                Image(systemName: "heart.fill")
-                                    .foregroundColor(.red)
-                            }
+                            Label("Leave a Tip", systemImage: "heart")
+                                .symbolRenderingMode(.multicolor)
                         }
                     }
                 }
