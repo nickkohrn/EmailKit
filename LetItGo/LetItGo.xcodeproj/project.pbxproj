@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		F920CE0B2A0AF2B600FC5395 /* PurchasesKit in Frameworks */ = {isa = PBXBuildFile; productRef = F920CE0A2A0AF2B600FC5395 /* PurchasesKit */; };
+		F920CE0D2A0AF48000FC5395 /* MainFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = F920CE0C2A0AF48000FC5395 /* MainFeature.swift */; };
+		F920CE0F2A0AF56900FC5395 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F920CE0E2A0AF56900FC5395 /* MainView.swift */; };
 		F960132F2A09CFB700873006 /* LetItGoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F960132E2A09CFB700873006 /* LetItGoApp.swift */; };
 		F96013332A09CFB800873006 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F96013322A09CFB800873006 /* Assets.xcassets */; };
 		F96013362A09CFB800873006 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F96013352A09CFB800873006 /* Preview Assets.xcassets */; };
@@ -26,6 +28,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F920CE0C2A0AF48000FC5395 /* MainFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeature.swift; sourceTree = "<group>"; };
+		F920CE0E2A0AF56900FC5395 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		F960132B2A09CFB700873006 /* LetItGo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LetItGo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F960132E2A09CFB700873006 /* LetItGoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetItGoApp.swift; sourceTree = "<group>"; };
 		F96013322A09CFB800873006 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -80,6 +84,8 @@
 			isa = PBXGroup;
 			children = (
 				F960132E2A09CFB700873006 /* LetItGoApp.swift */,
+				F920CE0C2A0AF48000FC5395 /* MainFeature.swift */,
+				F920CE0E2A0AF56900FC5395 /* MainView.swift */,
 				F96013562A09D0AB00873006 /* MessagingFeature.swift */,
 				F96013582A09D0B300873006 /* MessagingView.swift */,
 				F96013542A09D0A100873006 /* AccentColor.swift */,
@@ -186,7 +192,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				F96013572A09D0AB00873006 /* MessagingFeature.swift in Sources */,
+				F920CE0F2A0AF56900FC5395 /* MainView.swift in Sources */,
 				F960132F2A09CFB700873006 /* LetItGoApp.swift in Sources */,
+				F920CE0D2A0AF48000FC5395 /* MainFeature.swift in Sources */,
 				F960135B2A09D0BB00873006 /* AccentColorSelectionFeature.swift in Sources */,
 				F960135D2A09D0C000873006 /* AccentColorSelectionView.swift in Sources */,
 				F96013632A09D0D400873006 /* SettingsFeature.swift in Sources */,

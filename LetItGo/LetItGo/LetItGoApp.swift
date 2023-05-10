@@ -5,9 +5,9 @@ import SwiftUI
 struct LetItGoApp: App {
     var body: some Scene {
         WindowGroup {
-            MessagingView(store: .init(
+            MainView(store: .init(
                 initialState: .init(),
-                reducer: MessagingFeature()
+                reducer: MainFeature()
             ))
         }
     }

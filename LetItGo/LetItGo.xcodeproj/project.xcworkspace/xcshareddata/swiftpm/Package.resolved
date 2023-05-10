@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/nickkohrn/PurchasesKit.git",
       "state" : {
-        "revision" : "6becc8ad83c70af8edf107b2c223be28e2a4e950",
-        "version" : "0.2.0"
+        "revision" : "4056c693e7ade2b8fc29989f9ee148202b22ace7",
+        "version" : "0.3.0"
       }
     },
     {
