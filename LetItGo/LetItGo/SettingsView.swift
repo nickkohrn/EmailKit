@@ -64,7 +64,7 @@ struct SettingsView: View {
                     }
                     Section {
                         Button {
-
+                            viewStore.send(.submitReviewButtonActivated)
                         } label: {
                             LabeledContent {
                                 Image(systemName: "arrow.up.forward")
