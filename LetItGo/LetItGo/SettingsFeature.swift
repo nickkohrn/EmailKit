@@ -37,16 +37,18 @@ struct SettingsFeature: ReducerProtocol {
         case binding(BindingAction<State>)
         case delegate(DelegateAction)
         case dismissButtonActivated
+        case onAppear
         case purchasableProductTapped(PurchasableProduct)
         case receivedCanMakePaymentsResponse(TaskResult<Bool>)
         case receivedPurchaseCancelledByUserResponse
         case receivedPurchaseFailedResponse
         case receivedPurchaseSuccessResponse
         case receivedTipProducts(TaskResult<[PurchasableProduct]>)
-        case onAppear
+        case submitReviewButtonActivated
     }
 
     @Dependency(\.purchasesClient) var purchasesClient
+    @Dependency(\.openURL) var openURL
     @Dependency(\.userDefaults) var userDefaults
 
     var body: some ReducerProtocol<State, Action> {
@@ -83,6 +85,17 @@ struct SettingsFeature: ReducerProtocol {
 
             case .dismissButtonActivated:
                 return EffectTask(value: .delegate(.dismiss))
+
+            case .onAppear:
+                state.selectedAccentColor = userDefaults.selectedAccentColor
+                state.enableHapticFeedback = userDefaults.enableHapticFeedback
+                return .task(priority: .high) {
+                    await .receivedCanMakePaymentsResponse(
+                        TaskResult {
+                            await purchasesClient.canMakePayments()
+                        }
+                    )
+                }
 
             case .purchasableProductTapped(let product):
                 guard let storeProduct = product.storeProduct else {
@@ -140,16 +153,12 @@ struct SettingsFeature: ReducerProtocol {
                 state.tipProducts = tipProducts
                 return .none
 
-            case .onAppear:
-                state.selectedAccentColor = userDefaults.selectedAccentColor
-                state.enableHapticFeedback = userDefaults.enableHapticFeedback
-                return .task(priority: .high) {
-                    await .receivedCanMakePaymentsResponse(
-                        TaskResult {
-                            await purchasesClient.canMakePayments()
-                        }
-                    )
+            case .submitReviewButtonActivated:
+                guard let url = URL(string: "https://apps.apple.com/us/app/let-it-go/id6448896506") else {
+                    print("Expected \(URL.self)")
+                    return .none
                 }
+                return .fireAndForget { await openURL(url) }
 
             }
         }

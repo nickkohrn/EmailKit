@@ -19,8 +19,6 @@ struct SettingsView: View {
                         }
                     }
                     Section {
-                        Toggle("Haptic Feedback", isOn: viewStore.binding(\.$enableHapticFeedback))
-                            .tint(viewStore.selectedAccentColor.color)
                         NavigationLink(
                             destination: IfLetStore(store.scope(
                                 state: \.accentColorSelection,
@@ -51,6 +49,36 @@ struct SettingsView: View {
                         } icon: {
                             Image(systemName: "sparkles")
                                 .foregroundColor(.orange)
+                        }
+                    }
+                    Section {
+                        Toggle("Haptic Feedback", isOn: viewStore.binding(\.$enableHapticFeedback))
+                            .tint(viewStore.selectedAccentColor.color)
+                    } header: {
+                        Label {
+                            Text("Feel")
+                        } icon: {
+                            Image(systemName: "hand.point.up.left.fill")
+                                .foregroundColor(.teal)
+                        }
+                    }
+                    Section {
+                        Button {
+                            viewStore.send(.submitReviewButtonActivated)
+                        } label: {
+                            LabeledContent {
+                                Image(systemName: "arrow.up.forward")
+                                    .imageScale(.small)
+                            } label: {
+                                Text("Submit a Review")
+                            }
+                        }
+                    } header: {
+                        Label {
+                            Text("Feedback")
+                        } icon: {
+                            Image(systemName: "star.fill")
+                                .foregroundColor(.yellow)
                         }
                     }
                     if viewStore.canMakePayments {
