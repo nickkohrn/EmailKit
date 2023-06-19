@@ -1,4 +1,4 @@
-import ComposableArchitecture
+import Dependencies
 
 extension DependencyValues {
     public var emailClient: EmailClient {
