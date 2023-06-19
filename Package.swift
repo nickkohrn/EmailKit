@@ -11,13 +11,13 @@ let package = Package(
             targets: ["EmailKit"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/pointfreeco/swift-composable-architecture.git", .upToNextMajor(from: "0.0.0")),
+        .package(url: "https://github.com/pointfreeco/swift-dependencies.git", .upToNextMajor(from: "0.0.0")),
     ],
     targets: [
         .target(
             name: "EmailKit",
             dependencies: [
-                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                .product(name: "Dependencies", package: "swift-dependencies"),
             ]),
         .testTarget(
             name: "EmailKitTests",
