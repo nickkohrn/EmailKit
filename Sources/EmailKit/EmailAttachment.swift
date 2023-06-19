@@ -1,6 +1,6 @@
 import Foundation
 
-public struct EmailAttachment {
+public struct EmailAttachment: Equatable {
     public let data: Data
     public let filename: String
 
