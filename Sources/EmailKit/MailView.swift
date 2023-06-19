@@ -6,6 +6,10 @@ public struct MailView: UIViewControllerRepresentable{
 
     public typealias UIViewControllerType = MFMailComposeViewController
 
+    public init(configuration: EmailConfiguration) {
+        self.configuration = configuration
+    }
+
     public func updateUIViewController(
         _ uiViewController: MFMailComposeViewController,
         context: Context
