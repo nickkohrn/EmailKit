@@ -1,6 +1,6 @@
 import Foundation
 
-public struct EmailConfiguration {
+public struct EmailConfiguration: Equatable {
     public let toAddress: String
     public let subject: String
     public let body: String
