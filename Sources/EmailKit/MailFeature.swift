@@ -2,6 +2,10 @@ import ComposableArchitecture
 import SwiftUI
 import MessageUI
 
+extension MFMailComposeError {
+    static let unknown = MFMailComposeError(_nsError: NSError(domain: "MFMailComposeErrorDomain", code: 100, userInfo: nil))
+}
+
 public struct MailFeature: ReducerProtocol {
     public struct State: Equatable {
         public let configuration: EmailConfiguration
@@ -12,6 +16,13 @@ public struct MailFeature: ReducerProtocol {
     }
 
     public enum Action: Equatable {
+        public enum DelegateAction: Equatable {
+            case didFinish(MFMailComposeError?)
+            case onAppear
+        }
+
+        case delegateAction(DelegateAction)
+        case didFinish(MFMailComposeError?)
         case onAppear
     }
 
@@ -21,8 +32,14 @@ public struct MailFeature: ReducerProtocol {
         Reduce<State, Action> { state, action in
             switch action {
 
-            case .onAppear:
+            case .delegateAction:
                 return .none
+
+            case let .didFinish(error):
+                return .send(.delegateAction(.didFinish(error)))
+
+            case .onAppear:
+                return .send(.delegateAction(.onAppear))
 
             }
         }
@@ -31,11 +48,19 @@ public struct MailFeature: ReducerProtocol {
 
 public struct MailComposeView: UIViewControllerRepresentable {
     public let configuration: EmailConfiguration
+    public let onAppear: (() -> Void)?
+    public let onFinish: ((MFMailComposeError?) -> Void)?
 
     public typealias UIViewControllerType = MFMailComposeViewController
 
-    public init(configuration: EmailConfiguration) {
+    public init(
+        configuration: EmailConfiguration,
+        onAppear: (() -> Void)? = nil,
+        onFinish: ((MFMailComposeError?) -> Void)? = nil
+    ) {
         self.configuration = configuration
+        self.onAppear = onAppear
+        self.onFinish = onFinish
     }
 
     public func updateUIViewController(
@@ -44,36 +69,42 @@ public struct MailComposeView: UIViewControllerRepresentable {
     ) { }
 
     public func makeUIViewController(context: Context) -> MFMailComposeViewController {
-        if MFMailComposeViewController.canSendMail() {
-            let view = MFMailComposeViewController()
-            view.mailComposeDelegate = context.coordinator
-            view.setToRecipients([configuration.toAddress])
-            view.setSubject(configuration.subject)
-            view.setMessageBody(
-                configuration.body,
-                isHTML: false
+        let view = MFMailComposeViewController()
+        view.mailComposeDelegate = context.coordinator
+        view.setToRecipients([configuration.toAddress])
+        view.setSubject(configuration.subject)
+        view.setMessageBody(
+            configuration.body,
+            isHTML: false
+        )
+        for attachment in configuration.attachments {
+            view.addAttachmentData(
+                attachment.data,
+                mimeType: "text/plain",
+                fileName: attachment.filename
             )
-            for attachment in configuration.attachments {
-                view.addAttachmentData(
-                    attachment.data,
-                    mimeType: "text/plain",
-                    fileName: attachment.filename
-                )
-            }
-            return view
-        } else {
-            return MFMailComposeViewController()
         }
+        return view
     }
 
     public func makeCoordinator() -> Coordinator {
-        return Coordinator()
+        return Coordinator(
+            onAppear: onAppear,
+            onFinish: onFinish
+        )
     }
 
 
-    public class Coordinator: NSObject, MFMailComposeViewControllerDelegate{
-        public override init() {
-            super.init()
+    public class Coordinator: NSObject, MFMailComposeViewControllerDelegate {
+        public let onAppear: (() -> Void)?
+        public let onFinish: ((MFMailComposeError?) -> Void)?
+
+        public init(
+            onAppear: (() -> Void)?,
+            onFinish: ((MFMailComposeError?) -> Void)?
+        ) {
+            self.onAppear = onAppear
+            self.onFinish = onFinish
         }
 
         public func mailComposeController(
@@ -81,6 +112,13 @@ public struct MailComposeView: UIViewControllerRepresentable {
             didFinishWith result: MFMailComposeResult,
             error: Error?
         ) {
+            if let error {
+                if let composeError = error as? MFMailComposeError {
+                    onFinish?(composeError)
+                } else {
+                    onFinish?(.unknown)
+                }
+            }
             controller.dismiss(animated: true)
         }
     }
@@ -95,7 +133,12 @@ public struct MailView: View {
 
     public var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
-            MailComposeView(configuration: viewStore.configuration)
+            MailComposeView(
+                configuration: viewStore.configuration,
+                onAppear: { viewStore.send(.onAppear) },
+                onFinish: { error in viewStore.send(.didFinish(error)) }
+            )
+            .onAppear { viewStore.send(.onAppear) }
         }
     }
 }
