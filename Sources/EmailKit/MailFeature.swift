@@ -3,7 +3,7 @@ import SwiftUI
 import MessageUI
 
 extension MFMailComposeError {
-    static let unknown = MFMailComposeError(_nsError: NSError(domain: "MFMailComposeErrorDomain", code: 100, userInfo: nil))
+    public static let unknown = MFMailComposeError(_nsError: NSError(domain: "MFMailComposeErrorDomain", code: 100, userInfo: nil))
 }
 
 public struct MailFeature: ReducerProtocol {
